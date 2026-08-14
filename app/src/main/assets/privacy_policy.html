@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Privacy Policy - Aura TV Launcher</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #1e1b4b;
+            --accent-color: #818cf8;
+            --accent-glow: #22d3ee;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --border-color: #312e81;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.6;
+            margin: 0;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background-color: rgba(30, 27, 75, 0.4);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin: 0;
+            background: linear-gradient(135deg, var(--accent-glow), var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .last-updated {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-top: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 35px;
+            border-bottom: 1px solid rgba(129, 140, 248, 0.15);
+            padding-bottom: 8px;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+        }
+
+        ul {
+            padding-left: 20px;
+        }
+
+        li {
+            margin-bottom: 10px;
+        }
+
+        .footer {
+            margin-top: 50px;
+            border-top: 1px solid var(--border-color);
+            padding-top: 20px;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .highlight {
+            color: var(--accent-glow);
+            font-weight: 600;
+        }
+
+        @media (max-width: 600px) {
+            body {
+                padding: 20px 10px;
+            }
+            .container {
+                padding: 20px;
+            }
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <h1>Aura TV Launcher</h1>
+        <p class="last-updated">Privacy Policy • Last Updated: August 12, 2026</p>
+    </div>
+
+    <section>
+        <h2>1. Introduction</h2>
+        <p>Welcome to <span class="highlight">Aura TV Launcher</span> ("we," "our," or "us"). We are committed to protecting your privacy and ensuring you have a secure, efficient, and customizable experience on your smart TV and Android-based streaming devices. This Privacy Policy details how we handle information in our application.</p>
+    </section>
+
+    <section>
+        <h2>2. Data We Process Locally</h2>
+        <p>Aura TV Launcher operates primarily as a <strong>local-first</strong> user interface. Your settings, organization folders, categories, background wallpaper configurations, and custom hotkeys are stored locally on your device via an encrypted secure database (SQLite / Room).</p>
+        <p>We process the following information strictly on your hardware:</p>
+        <ul>
+            <li><span class="highlight">Installed Application List</span>: To display your applications on the launch grid and group them into categories. This list never leaves your device.</li>
+            <li><span class="highlight">User Preferences</span>: Column counts, aspect ratios, background theme choices, screen timeout states, and custom categories.</li>
+            <li><span class="highlight">Secure Vault Details</span>: Hidden application configurations are strictly safeguarded using local passwords without cloud sync.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>3. Third-Party Services & Cloud Telemetry</h2>
+        <p>To improve stability, diagnose system performance, and analyze navigation usability, Aura TV Launcher may integrate optional analytics tools if configured on your device framework:</p>
+        <ul>
+            <li><strong>Firebase Analytics & Crashlytics:</strong> Used to monitor application load times, button-clicks, and record code stacktraces during unexpected crashes. These elements are transmitted securely to Google servers and do not contain personally identifiable information (PII).</li>
+            <li><strong>Firebase Remote Config:</strong> Periodically requests configuration parameters (e.g., dynamic banner definitions or feature availability) to improve remote TV setups.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>4. User Permissions</h2>
+        <p>To function seamlessly as a system-wide launcher, Aura TV Launcher may request specific system permissions:</p>
+        <ul>
+            <li><span class="highlight">Query All Packages</span>: Necessary to read the list of installed applications so you can launch them directly.</li>
+            <li><span class="highlight">Internet Access</span>: Required only for downloading dynamic Remote Config structures, telemetry reports, and updating streaming category icons.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>5. Your Controls & Data Deletion</h2>
+        <p>Because we respect user autonomy, you can fully control your data lifecycle at any time:</p>
+        <ul>
+            <li><strong>Reset Settings:</strong> You can completely wipe the Room database, resetting all launcher categories and restoring defaults in the Settings Sidebar.</li>
+            <li><strong>Application Uninstallation:</strong> Uninstalling the launcher will completely delete all local cache, categories, configuration details, and wallpaper selections from your Android OS memory space.</li>
+        </ul>
+    </section>
+
+    <section>
+        <h2>6. Contact Us</h2>
+        <p>If you have any questions or feedback regarding our privacy standards or application behavior, please contact us directly at:</p>
+        <p class="highlight" style="font-size: 1.1rem; text-align: center; margin-top: 20px;">tuyenctbk@gmail.com</p>
+    </section>
+
+    <div class="footer">
+        <p>&copy; 2026 Aura TV. Built for privacy-centric television entertainment.</p>
+    </div>
+</div>
+
+</body>
+</html>

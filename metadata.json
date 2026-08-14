@@ -1,0 +1,6 @@
+{
+  "name": "Aura TV",
+  "description": "High-performance, open-source, ad-free sideload launcher for Android TV.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,103 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:aapt="http://schemas.android.com/aapt"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Outer Glowing Ambient Aura Ring (Gives depth and scale) -->
+    <path
+        android:pathData="M54,18 C73.88,18 90,34.12 90,54 C90,73.88 73.88,90 54,90 C34.12,90 18,73.88 18,54 C18,34.12 34.12,18 54,18 Z"
+        android:strokeWidth="1.5"
+        android:strokeLineCap="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="18"
+                android:startY="18"
+                android:endX="90"
+                android:endY="90"
+                android:type="linear">
+                <item android:color="#4F46E5" android:offset="0.0" />
+                <item android:color="#06B6D4" android:offset="0.5" />
+                <item android:color="#EC4899" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Outer Decorative Orbiting Ring Wings -->
+    <path
+        android:pathData="M24,32 C34,20 74,20 84,32 M24,76 C34,88 74,88 84,76"
+        android:strokeWidth="2.5"
+        android:strokeLineCap="round">
+        <aapt:attr name="android:strokeColor">
+            <gradient
+                android:startX="24"
+                android:startY="20"
+                android:endX="84"
+                android:endY="88"
+                android:type="linear">
+                <item android:color="#3B82F6" android:offset="0.0" />
+                <item android:color="#D946EF" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Premium Beveled TV Outer Frame -->
+    <path
+        android:pathData="M28,34 h52 a6,6 0 0,1 6,6 v28 a6,6 0 0,1 -6,6 h-52 a6,6 0 0,1 -6,-6 v-28 a6,6 0 0,1 6,-6 z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="22"
+                android:startY="34"
+                android:endX="86"
+                android:endY="74"
+                android:type="linear">
+                <item android:color="#818CF8" android:offset="0.0" />
+                <item android:color="#4F46E5" android:offset="0.5" />
+                <item android:color="#C084FC" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- TV Screen Glassmorphic Glossy Inner Panel -->
+    <path
+        android:pathData="M31,37 h46 a3,3 0 0,1 3,3 v22 a3,3 0 0,1 -3,3 h-46 a3,3 0 0,1 -3,-3 v-22 a3,3 0 0,1 3,-3 z"
+        android:fillColor="#0B0F19" />
+
+    <!-- Sleek Neon Accent Reflection Line on Screen Top -->
+    <path
+        android:pathData="M31,37 h46"
+        android:strokeWidth="0.8"
+        android:strokeColor="#A5B4FC" />
+
+    <!-- TV Desktop Stand Base -->
+    <path
+        android:pathData="M54,74 L48,82 H60 Z"
+        android:fillColor="#818CF8" />
+    <path
+        android:pathData="M42,82 H66"
+        android:strokeWidth="1.5"
+        android:strokeColor="#818CF8"
+        android:strokeLineCap="round" />
+
+    <!-- Center 'Aura' Neon Play Glass Triangle Symbol -->
+    <path
+        android:pathData="M48,43 L62,51 L48,59 Z">
+        <aapt:attr name="android:fillColor">
+            <gradient
+                android:startX="48"
+                android:startY="43"
+                android:endX="62"
+                android:endY="59"
+                android:type="linear">
+                <item android:color="#22D3EE" android:offset="0.0" />
+                <item android:color="#818CF8" android:offset="0.6" />
+                <item android:color="#EC4899" android:offset="1.0" />
+            </gradient>
+        </aapt:attr>
+    </path>
+
+    <!-- Top and Bottom Soft Highlight Square Dots (Fully compatible with Android Vector Drawables) -->
+    <path android:pathData="M52,16 h4 v4 h-4 z" android:fillColor="#22D3EE" />
+    <path android:pathData="M52,88 h4 v4 h-4 z" android:fillColor="#EC4899" />
+</vector>

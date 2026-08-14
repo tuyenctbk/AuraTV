@@ -30,10 +30,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
 
@@ -63,7 +65,7 @@ fun TransparencyNoticeDialog(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "App Discovery Transparency",
+                    text = stringResource(R.string.transparency_title),
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
@@ -72,9 +74,7 @@ fun TransparencyNoticeDialog(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Aura TV requires permission to scan installed applications (QUERY_ALL_PACKAGES). " +
-                            "This is necessary to automatically detect and display both native TV apps and sideloaded mobile apps on your device.\n\n" +
-                            "Aura TV is 100% open-source, ad-free, and respects your privacy. No personal data or app list is ever collected or transmitted.",
+                    text = stringResource(R.string.transparency_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = Color.White.copy(alpha = 0.8f),
                     lineHeight = 18.sp
@@ -97,7 +97,7 @@ fun TransparencyNoticeDialog(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "I Understand & Accept",
+                        text = stringResource(R.string.transparency_accept),
                         color = Color.Black,
                         fontWeight = FontWeight.Bold,
                         fontSize = 14.sp

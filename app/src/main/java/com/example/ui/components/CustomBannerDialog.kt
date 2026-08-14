@@ -29,11 +29,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.data.model.AppItem
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
@@ -59,15 +61,14 @@ fun CustomBannerDialog(
                 modifier = Modifier.padding(20.dp)
             ) {
                 Text(
-                    text = "Banner Fixer: ${app.label}",
+                    text = stringResource(R.string.banner_dialog_title, app.label),
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
-                    text = "Enter local file path or image URL for custom 16:9 banner.\n" +
-                            "Tip: Save images to /sdcard/GhostLauncher/Banners/${app.packageName}.png for auto-detection.",
+                    text = stringResource(R.string.banner_dialog_desc, app.packageName),
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.White.copy(alpha = 0.6f),
                     modifier = Modifier.padding(top = 4.dp)
@@ -132,7 +133,7 @@ fun CustomBannerDialog(
                             }
                             .padding(horizontal = 12.dp, vertical = 8.dp)
                     ) {
-                        Text("Reset Banner", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+                        Text(stringResource(R.string.reset), color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
                     }
 
                     Row {
@@ -146,7 +147,7 @@ fun CustomBannerDialog(
                                 .clickable { onDismiss() }
                                 .padding(horizontal = 14.dp, vertical = 8.dp)
                         ) {
-                            Text("Cancel", color = Color.White, fontSize = 13.sp)
+                            Text(stringResource(R.string.cancel), color = Color.White, fontSize = 13.sp)
                         }
 
                         Spacer(modifier = Modifier.width(8.dp))
@@ -164,7 +165,7 @@ fun CustomBannerDialog(
                                 }
                                 .padding(horizontal = 16.dp, vertical = 8.dp)
                         ) {
-                            Text("Save", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                            Text(stringResource(R.string.save), color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                         }
                     }
                 }

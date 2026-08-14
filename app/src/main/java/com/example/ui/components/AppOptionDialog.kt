@@ -37,10 +37,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.data.model.AppItem
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvSurfaceVariant
@@ -62,7 +64,7 @@ fun AppOptionDialog(
             shape = RoundedCornerShape(20.dp),
             color = Color(0xFF0F172A),
             modifier = Modifier
-                .width(380.dp)
+                .width(420.dp)
                 .border(1.dp, TvFocusGlow.copy(alpha = 0.5f), RoundedCornerShape(20.dp))
         ) {
             Column(
@@ -86,8 +88,8 @@ fun AppOptionDialog(
                 // Menu Actions
                 OptionItem(
                     icon = Icons.Default.PlayArrow,
-                    title = "Launch Application",
-                    subtitle = "Open ${app.label}",
+                    title = stringResource(R.string.launch_app),
+                    subtitle = app.label,
                     onClick = {
                         onDismiss()
                         onLaunch(app)
@@ -96,8 +98,8 @@ fun AppOptionDialog(
 
                 OptionItem(
                     icon = if (app.category == "Favorites") Icons.Default.Star else Icons.Default.StarOutline,
-                    title = if (app.category == "Favorites") "Remove from Favorites" else "Add to Favorites",
-                    subtitle = "Toggle row priority",
+                    title = if (app.category == "Favorites") stringResource(R.string.remove_from_favorites) else stringResource(R.string.add_to_favorites),
+                    subtitle = if (app.category == "Favorites") "Favorited" else "Standard priority",
                     onClick = {
                         onDismiss()
                         onToggleFavorite(app)
@@ -106,8 +108,8 @@ fun AppOptionDialog(
 
                 OptionItem(
                     icon = Icons.Default.Info,
-                    title = "Deep Stop (Force Stop Background App)",
-                    subtitle = "Open system App Info to force-stop background memory consumption",
+                    title = stringResource(R.string.deep_stop),
+                    subtitle = stringResource(R.string.deep_stop_desc),
                     onClick = {
                         onDismiss()
                         onDeepStopInfo(app)
@@ -116,8 +118,8 @@ fun AppOptionDialog(
 
                 OptionItem(
                     icon = Icons.Default.Image,
-                    title = "Banner Fixer",
-                    subtitle = if (!app.customBannerPath.isNullOrEmpty()) "Custom banner active" else "Assign high-res custom banner path",
+                    title = stringResource(R.string.banner_fixer),
+                    subtitle = stringResource(R.string.banner_fixer_desc),
                     onClick = {
                         onDismiss()
                         onOpenCustomBanner(app)
@@ -126,8 +128,8 @@ fun AppOptionDialog(
 
                 OptionItem(
                     icon = Icons.Default.Key,
-                    title = "Map Remote Hotkey (0-9)",
-                    subtitle = if (app.fastLaunchKey != null) "Current Hotkey: [${app.fastLaunchKey}]" else "Assign fast launcher number key",
+                    title = stringResource(R.string.map_hotkey),
+                    subtitle = if (app.fastLaunchKey != null) "Current: [${app.fastLaunchKey}]" else stringResource(R.string.map_hotkey_desc),
                     onClick = {
                         onDismiss()
                         onOpenHotkeyAssign(app)
@@ -136,8 +138,8 @@ fun AppOptionDialog(
 
                 OptionItem(
                     icon = Icons.Default.Category,
-                    title = "Change Category / Dynamic Folder",
-                    subtitle = "Current: ${app.category}",
+                    title = stringResource(R.string.change_category),
+                    subtitle = "Current folder: ${app.category}",
                     onClick = {
                         onDismiss()
                         onOpenCategoryMove(app)
@@ -146,8 +148,8 @@ fun AppOptionDialog(
 
                 OptionItem(
                     icon = Icons.Default.VisibilityOff,
-                    title = if (app.isHidden) "Unhide App" else "Hide App (Stealth Vault)",
-                    subtitle = if (app.isHidden) "App is currently hidden" else "Move to Stealth Vault",
+                    title = if (app.isHidden) stringResource(R.string.unhide_app) else stringResource(R.string.hide_app),
+                    subtitle = if (app.isHidden) "Visible" else "Stealth Vault",
                     onClick = {
                         onDismiss()
                         onToggleHide(app)

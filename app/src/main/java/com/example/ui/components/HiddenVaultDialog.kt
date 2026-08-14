@@ -33,11 +33,13 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
 import com.example.ui.theme.TvSurfaceVariant
@@ -48,14 +50,14 @@ fun HiddenVaultDialog(
     onUnlockWithCode: (String) -> Boolean
 ) {
     var codeText by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf<String?>(null) }
+    var hasError by remember { mutableStateOf(false) }
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
             shape = RoundedCornerShape(20.dp),
             color = Color(0xFF0F172A),
             modifier = Modifier
-                .width(360.dp)
+                .width(400.dp)
                 .border(1.dp, TvFocusGlow, RoundedCornerShape(20.dp))
         ) {
             Column(
@@ -72,14 +74,14 @@ fun HiddenVaultDialog(
                 Spacer(modifier = Modifier.height(12.dp))
 
                 Text(
-                    text = "Stealth Vault Unlock",
+                    text = stringResource(R.string.vault_title),
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
-                    text = "Enter code (Default: GHOST) or press D-Pad sequence UP, UP, DOWN, LEFT on home screen.",
+                    text = stringResource(R.string.vault_desc),
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.White.copy(alpha = 0.6f),
                     modifier = Modifier.padding(top = 4.dp)
@@ -102,7 +104,7 @@ fun HiddenVaultDialog(
                         value = codeText,
                         onValueChange = {
                             codeText = it
-                            errorMessage = null
+                            hasError = false
                         },
                         singleLine = true,
                         textStyle = TextStyle(
@@ -128,10 +130,10 @@ fun HiddenVaultDialog(
                     )
                 }
 
-                if (errorMessage != null) {
+                if (hasError) {
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(
-                        text = errorMessage!!,
+                        text = stringResource(R.string.vault_invalid_passcode),
                         color = MaterialTheme.colorScheme.error,
                         fontSize = 12.sp
                     )
@@ -153,7 +155,7 @@ fun HiddenVaultDialog(
                             .clickable { onDismiss() }
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text("Cancel", color = Color.White, fontSize = 13.sp)
+                        Text(stringResource(R.string.cancel), color = Color.White, fontSize = 13.sp)
                     }
 
                     Spacer(modifier = Modifier.width(8.dp))
@@ -170,12 +172,12 @@ fun HiddenVaultDialog(
                                 if (success) {
                                     onDismiss()
                                 } else {
-                                    errorMessage = "Invalid Passcode"
+                                    hasError = true
                                 }
                             }
                             .padding(horizontal = 16.dp, vertical = 8.dp)
                     ) {
-                        Text("Unlock", color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
+                        Text(stringResource(R.string.unlock), color = Color.Black, fontWeight = FontWeight.Bold, fontSize = 13.sp)
                     }
                 }
             }

@@ -73,10 +73,12 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.R
 import com.example.data.model.AppItem
 import com.example.ui.components.AppCard
 import com.example.ui.components.AppOptionDialog
@@ -497,9 +499,9 @@ fun MainLauncherScreen(
             if (showSharePrompt) {
                 SuggestionDialog(
                     icon = Icons.Default.Share,
-                    title = "Enjoying Aura TV?",
-                    description = "Help your friends and family discover a clean, lightning-fast TV launcher experience by sharing Aura TV!",
-                    primaryButtonText = "Share Aura TV",
+                    title = stringResource(R.string.share_title),
+                    description = stringResource(R.string.share_desc),
+                    primaryButtonText = stringResource(R.string.share_action),
                     onPrimary = { viewModel.shareApp() },
                     onDismiss = { viewModel.dismissSharePrompt() }
                 )
@@ -508,9 +510,9 @@ fun MainLauncherScreen(
             if (showRatePrompt) {
                 SuggestionDialog(
                     icon = Icons.Default.Star,
-                    title = "Rate Aura TV",
-                    description = "If you enjoy using Aura TV, taking a moment to rate us on the Play Store helps us a lot!",
-                    primaryButtonText = "Rate Now",
+                    title = stringResource(R.string.rate_title),
+                    description = stringResource(R.string.rate_desc),
+                    primaryButtonText = stringResource(R.string.rate_action),
                     onPrimary = { viewModel.rateApp() },
                     onDismiss = { viewModel.dismissRatePrompt() }
                 )

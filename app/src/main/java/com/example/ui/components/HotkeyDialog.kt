@@ -28,10 +28,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.data.model.AppItem
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvSurfaceVariant
@@ -47,21 +49,21 @@ fun HotkeyDialog(
             shape = RoundedCornerShape(20.dp),
             color = Color(0xFF0F172A),
             modifier = Modifier
-                .width(380.dp)
+                .width(400.dp)
                 .border(1.dp, TvFocusGlow, RoundedCornerShape(20.dp))
         ) {
             Column(
                 modifier = Modifier.padding(20.dp)
             ) {
                 Text(
-                    text = "Map Hotkey: ${app.label}",
+                    text = stringResource(R.string.hotkey_dialog_title, app.label),
                     style = MaterialTheme.typography.titleMedium,
                     color = Color.White,
                     fontWeight = FontWeight.Bold
                 )
 
                 Text(
-                    text = "Press a remote number key (0-9) on the launcher to instantly launch this application.",
+                    text = stringResource(R.string.hotkey_dialog_desc),
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.White.copy(alpha = 0.6f),
                     modifier = Modifier.padding(top = 4.dp)
@@ -123,7 +125,7 @@ fun HotkeyDialog(
                             }
                             .padding(horizontal = 12.dp, vertical = 8.dp)
                     ) {
-                        Text("Clear Hotkey", color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
+                        Text(stringResource(R.string.clear_hotkey), color = MaterialTheme.colorScheme.error, fontSize = 12.sp)
                     }
 
                     var isCancelFocused by remember { mutableStateOf(false) }
@@ -136,7 +138,7 @@ fun HotkeyDialog(
                             .clickable { onDismiss() }
                             .padding(horizontal = 14.dp, vertical = 8.dp)
                     ) {
-                        Text("Cancel", color = Color.White, fontSize = 13.sp)
+                        Text(stringResource(R.string.cancel), color = Color.White, fontSize = 13.sp)
                     }
                 }
             }

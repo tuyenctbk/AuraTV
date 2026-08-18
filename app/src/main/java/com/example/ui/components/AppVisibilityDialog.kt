@@ -102,7 +102,7 @@ fun AppVisibilityDialog(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "${allApps.size} total apps • $hiddenCount hidden",
+                            text = stringResource(R.string.total_hidden_summary, allApps.size, hiddenCount),
                             color = Color.White.copy(alpha = 0.6f),
                             fontSize = 12.sp
                         )
@@ -161,7 +161,7 @@ fun AppVisibilityDialog(
                             .focusable(),
                         decorationBox = { innerTextField ->
                             if (searchQuery.isEmpty()) {
-                                Text("Filter applications...", color = Color.White.copy(alpha = 0.35f), fontSize = 13.sp)
+                                Text(stringResource(R.string.filter_apps_hint), color = Color.White.copy(alpha = 0.35f), fontSize = 13.sp)
                             }
                             innerTextField()
                         }
@@ -250,7 +250,7 @@ private fun AppVisibilityItem(
                 fontWeight = FontWeight.SemiBold
             )
             Text(
-                text = if (app.isHidden) "Hidden (Stealth Vault)" else "Visible on Grid",
+                text = if (app.isHidden) stringResource(R.string.hidden_stealth_vault) else stringResource(R.string.visible_on_grid),
                 color = if (isFocused) Color.Black.copy(alpha = 0.7f) else (if (app.isHidden) Color(0xFFEF4444) else Color(0xFF10B981)),
                 fontSize = 11.sp
             )
@@ -258,7 +258,7 @@ private fun AppVisibilityItem(
 
         Icon(
             imageVector = if (app.isHidden) Icons.Default.VisibilityOff else Icons.Default.Visibility,
-            contentDescription = if (app.isHidden) "Hidden" else "Visible",
+            contentDescription = if (app.isHidden) stringResource(R.string.hidden_stealth_vault) else stringResource(R.string.visible_on_grid),
             tint = if (isFocused) Color.Black else (if (app.isHidden) Color(0xFFEF4444) else Color(0xFF10B981)),
             modifier = Modifier.size(22.dp)
         )

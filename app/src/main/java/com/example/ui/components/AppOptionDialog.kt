@@ -75,12 +75,13 @@ fun AppOptionDialog(
     onToggleHide: (AppItem) -> Unit,
     onUninstall: ((AppItem) -> Unit)? = null
 ) {
+    val context = androidx.compose.ui.platform.LocalContext.current
     val dateFormat = remember { SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.getDefault()) }
     val installDateStr = remember(app.firstInstallTime) {
-        if (app.firstInstallTime > 0) dateFormat.format(Date(app.firstInstallTime)) else "Pre-installed / Unknown"
+        if (app.firstInstallTime > 0) dateFormat.format(Date(app.firstInstallTime)) else context.getString(R.string.app_install_preinstalled)
     }
     val lastLaunchedStr = remember(app.lastLaunchedTime) {
-        if (app.lastLaunchedTime > 0) dateFormat.format(Date(app.lastLaunchedTime)) else "Never"
+        if (app.lastLaunchedTime > 0) dateFormat.format(Date(app.lastLaunchedTime)) else context.getString(R.string.app_last_launch_never)
     }
 
     Dialog(onDismissRequest = onDismiss) {
@@ -237,7 +238,7 @@ fun AppOptionDialog(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Text(
-                    text = "ACTIONS",
+                    text = stringResource(R.string.actions_header),
                     color = Color.White.copy(alpha = 0.4f),
                     fontSize = 10.sp,
                     fontWeight = FontWeight.Bold,
@@ -250,7 +251,7 @@ fun AppOptionDialog(
                 OptionItem(
                     icon = Icons.Default.PlayArrow,
                     title = stringResource(R.string.launch_app),
-                    subtitle = "Open ${app.label}",
+                    subtitle = stringResource(R.string.open_app_desc, app.label),
                     onClick = {
                         onDismiss()
                         onLaunch(app)
@@ -271,7 +272,7 @@ fun AppOptionDialog(
                     OptionItem(
                         icon = Icons.Default.Delete,
                         title = stringResource(R.string.uninstall_app),
-                        subtitle = if (app.isSystem) stringResource(R.string.uninstall_system_app_warning) else "Uninstall from device",
+                        subtitle = if (app.isSystem) stringResource(R.string.uninstall_system_app_warning) else stringResource(R.string.uninstall_desc),
                         isDestructive = true,
                         onClick = {
                             onDismiss()
@@ -283,7 +284,7 @@ fun AppOptionDialog(
                 OptionItem(
                     icon = if (app.category == "Favorites") Icons.Default.Star else Icons.Default.StarOutline,
                     title = if (app.category == "Favorites") stringResource(R.string.remove_from_favorites) else stringResource(R.string.add_to_favorites),
-                    subtitle = if (app.category == "Favorites") "Favorited" else "Standard priority",
+                    subtitle = if (app.category == "Favorites") stringResource(R.string.favorited) else stringResource(R.string.standard_priority),
                     onClick = {
                         onDismiss()
                         onToggleFavorite(app)
@@ -293,7 +294,7 @@ fun AppOptionDialog(
                 OptionItem(
                     icon = Icons.Default.Category,
                     title = stringResource(R.string.change_category),
-                    subtitle = "Current folder: ${app.category}",
+                    subtitle = stringResource(R.string.current_folder_label, app.category),
                     onClick = {
                         onDismiss()
                         onOpenCategoryMove(app)
@@ -303,7 +304,7 @@ fun AppOptionDialog(
                 OptionItem(
                     icon = Icons.Default.Key,
                     title = stringResource(R.string.map_hotkey),
-                    subtitle = if (app.fastLaunchKey != null) "Current: [${app.fastLaunchKey}]" else stringResource(R.string.map_hotkey_desc),
+                    subtitle = if (app.fastLaunchKey != null) stringResource(R.string.current_hotkey_label, app.fastLaunchKey) else stringResource(R.string.map_hotkey_desc),
                     onClick = {
                         onDismiss()
                         onOpenHotkeyAssign(app)
@@ -323,7 +324,7 @@ fun AppOptionDialog(
                 OptionItem(
                     icon = Icons.Default.VisibilityOff,
                     title = if (app.isHidden) stringResource(R.string.unhide_app) else stringResource(R.string.hide_app),
-                    subtitle = if (app.isHidden) "Visible" else "Stealth Vault",
+                    subtitle = if (app.isHidden) stringResource(R.string.visible_on_grid) else stringResource(R.string.stealth_vault_label),
                     onClick = {
                         onDismiss()
                         onToggleHide(app)

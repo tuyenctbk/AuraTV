@@ -137,4 +137,27 @@ Tip: Save images to /sdcard/GhostLauncher/Banners/%1$s.png for auto-detection.</
     <string name="sort_recently_used">Most Recently Used</string>
     <string name="sort_frequently_used">Most Frequently Used</string>
     <string name="sort_install_date">Installation Date</string>
+    <string name="app_install_preinstalled">Pre-installed / Unknown</string>
+    <string name="app_last_launch_never">Never</string>
+    <string name="actions_header">ACTIONS</string>
+    <string name="open_app_desc">Open %1$s</string>
+    <string name="uninstall_desc">Uninstall from device</string>
+    <string name="favorited">Favorited</string>
+    <string name="standard_priority">Standard priority</string>
+    <string name="current_folder_label">Current folder: %1$s</string>
+    <string name="current_hotkey_label">Current: [%1$s]</string>
+    <string name="visible_on_grid">Visible on Grid</string>
+    <string name="stealth_vault_label">Stealth Vault</string>
+    <string name="filter_apps_hint">Filter applications...</string>
+    <string name="total_hidden_summary">%1$d total apps • %2$d hidden</string>
+    <string name="hidden_stealth_vault">Hidden (Stealth Vault)</string>
+    <string name="folder_manager_desc">Select a folder or create a new one to organize apps</string>
+    <string name="folder_title_label">Folder: %1$s</string>
+    <string name="user_defined_folders">USER-DEFINED FOLDERS</string>
+    <string name="new_folder">New Folder</string>
+    <string name="enter_folder_name">Enter new folder name...</string>
+    <string name="create">Create</string>
+    <string name="apps_count_inside">%1$d applications inside</string>
+    <string name="manage_apps_label">Manage Apps →</string>
+    <string name="toggle_apps_folder_desc">Toggle apps to include in \"%1$s\":</string>
 </resources>

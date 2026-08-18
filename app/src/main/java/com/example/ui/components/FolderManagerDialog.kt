@@ -103,7 +103,7 @@ fun FolderManagerDialog(
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = if (selectedFolder == null) "Select a folder or create a new one to organize apps" else "Folder: $selectedFolder",
+                            text = if (selectedFolder == null) stringResource(R.string.folder_manager_desc) else stringResource(R.string.folder_title_label, selectedFolder ?: ""),
                             color = Color.White.copy(alpha = 0.6f),
                             fontSize = 12.sp
                         )
@@ -145,7 +145,7 @@ fun FolderManagerDialog(
                         verticalAlignment = Alignment.CenterVertically
                     ) {
                         Text(
-                            text = "USER-DEFINED FOLDERS",
+                            text = stringResource(R.string.user_defined_folders),
                             color = Color.White.copy(alpha = 0.4f),
                             fontSize = 11.sp,
                             fontWeight = FontWeight.Bold,
@@ -166,13 +166,13 @@ fun FolderManagerDialog(
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Add,
-                                contentDescription = "New Folder",
+                                contentDescription = stringResource(R.string.new_folder),
                                 tint = if (isCreateFocused) Color.Black else TvPrimary,
                                 modifier = Modifier.size(14.dp)
                             )
                             Spacer(modifier = Modifier.width(4.dp))
                             Text(
-                                text = "New Folder",
+                                text = stringResource(R.string.new_folder),
                                 color = if (isCreateFocused) Color.Black else Color.White,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
@@ -200,7 +200,7 @@ fun FolderManagerDialog(
                                 modifier = Modifier.weight(1f),
                                 decorationBox = { innerTextField ->
                                     if (newFolderName.isEmpty()) {
-                                        Text("Enter new folder name...", color = Color.White.copy(alpha = 0.35f), fontSize = 13.sp)
+                                        Text(stringResource(R.string.enter_folder_name), color = Color.White.copy(alpha = 0.35f), fontSize = 13.sp)
                                     }
                                     innerTextField()
                                 }
@@ -224,7 +224,7 @@ fun FolderManagerDialog(
                                     .padding(horizontal = 10.dp, vertical = 6.dp)
                             ) {
                                 Text(
-                                    text = "Create",
+                                    text = stringResource(R.string.create),
                                     color = if (isConfirmFocused) Color.Black else Color.Black,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
@@ -271,13 +271,13 @@ fun FolderManagerDialog(
                                         fontWeight = FontWeight.Bold
                                     )
                                     Text(
-                                        text = "$appCount applications inside",
+                                        text = stringResource(R.string.apps_count_inside, appCount),
                                         color = if (isFolderFocused) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.55f),
                                         fontSize = 11.sp
                                     )
                                 }
                                 Text(
-                                    text = "Manage Apps →",
+                                    text = stringResource(R.string.manage_apps_label),
                                     color = if (isFolderFocused) Color.Black else TvPrimary,
                                     fontSize = 11.sp,
                                     fontWeight = FontWeight.Bold
@@ -289,7 +289,7 @@ fun FolderManagerDialog(
                     // Assign/unassign apps to selectedFolder
                     val currentTargetFolder = selectedFolder ?: ""
                     Text(
-                        text = "Toggle apps to include in \"$currentTargetFolder\":",
+                        text = stringResource(R.string.toggle_apps_folder_desc, currentTargetFolder),
                         color = Color.White.copy(alpha = 0.7f),
                         fontSize = 12.sp,
                         fontWeight = FontWeight.Medium
@@ -372,7 +372,7 @@ fun FolderManagerDialog(
                                         fontWeight = FontWeight.SemiBold
                                     )
                                     Text(
-                                        text = "Current folder: ${app.category}",
+                                        text = stringResource(R.string.current_folder_label, app.category),
                                         color = if (isAppFocused) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.55f),
                                         fontSize = 11.sp
                                     )

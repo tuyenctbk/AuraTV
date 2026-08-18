@@ -104,4 +104,20 @@ Tip: Save images to /sdcard/GhostLauncher/Banners/%1$s.png for auto-detection.</
     <string name="rate_title">Rate Aura TV</string>
     <string name="rate_desc">If you enjoy using Aura TV, taking a moment to rate us on the Play Store helps us a lot!</string>
     <string name="rate_action">Rate Now</string>
+    <string name="shortcut_launch">Launch</string>
+    <string name="shortcut_options">Options</string>
+    <string name="shortcut_hotkey">Hotkey</string>
+    <string name="shortcut_voice">Voice</string>
+    <string name="empty_matching">No apps found matching \"%1$s\"</string>
+    <string name="empty_category">No applications in \"%1$s\"</string>
+    <string name="empty_tip_vault">Tip: Some apps may be hidden in the Stealth Vault.</string>
+    <string name="empty_tip_category">Try selecting another category folder or clear search.</string>
+    <string name="screensaver_resume_hint">OLED Ambient Saver — Press any button to resume</string>
+    <string name="screensaver_label">OLED Screensaver Inactivity Timeout</string>
+    <string name="screensaver_desc">Triggers an OLED-safe ambient black screen after inactivity to prevent display burn-in.</string>
+    <string name="category_media">Media</string>
+    <string name="category_tools">Tools</string>
+    <string name="preset_dark_cyber">Dark Cyber</string>
+    <string name="preset_neon_aurora">Aurora</string>
+    <string name="preset_cyber_grid">Deep Slate</string>
 </resources>

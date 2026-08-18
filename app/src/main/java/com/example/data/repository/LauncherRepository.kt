@@ -197,13 +197,54 @@ class LauncherRepository(
                 }
             }
 
-            val defaultCategory = when (appType) {
-                AppType.LEANBACK -> "TV Apps"
-                AppType.SIDELOADED -> "Sideloaded"
-                AppType.SYSTEM -> "System"
+            // Intelligent Auto-Categorization (Games, Media/Streaming, Tools, Work, System)
+            val detectedCategory = when {
+                // Category Game check
+                meta?.category != null -> meta.category
+                isLeanback && (pkgName.contains("game", ignoreCase = true) || resolveInfo.activityInfo.applicationInfo.category == ApplicationInfo.CATEGORY_GAME) -> "Games"
+                resolveInfo.activityInfo.applicationInfo.category == ApplicationInfo.CATEGORY_GAME ||
+                        pkgName.contains(".game", ignoreCase = true) ||
+                        label.contains("game", ignoreCase = true) -> "Games"
+                // Media / Audio / Video / Streaming check
+                resolveInfo.activityInfo.applicationInfo.category == ApplicationInfo.CATEGORY_AUDIO ||
+                        resolveInfo.activityInfo.applicationInfo.category == ApplicationInfo.CATEGORY_VIDEO ||
+                        pkgName.contains("youtube", ignoreCase = true) ||
+                        pkgName.contains("netflix", ignoreCase = true) ||
+                        pkgName.contains("media", ignoreCase = true) ||
+                        pkgName.contains("video", ignoreCase = true) ||
+                        pkgName.contains("music", ignoreCase = true) ||
+                        pkgName.contains("player", ignoreCase = true) ||
+                        pkgName.contains("stream", ignoreCase = true) ||
+                        pkgName.contains("plex", ignoreCase = true) ||
+                        pkgName.contains("kodi", ignoreCase = true) ||
+                        pkgName.contains("spotify", ignoreCase = true) ||
+                        pkgName.contains("twitch", ignoreCase = true) ||
+                        label.contains("stream", ignoreCase = true) ||
+                        label.contains("tv", ignoreCase = true) ||
+                        label.contains("music", ignoreCase = true) ||
+                        label.contains("player", ignoreCase = true) -> "Media"
+                // Tools / Utilities
+                pkgName.contains("tool", ignoreCase = true) ||
+                        pkgName.contains("util", ignoreCase = true) ||
+                        pkgName.contains("clean", ignoreCase = true) ||
+                        pkgName.contains("file", ignoreCase = true) ||
+                        pkgName.contains("speed", ignoreCase = true) ||
+                        pkgName.contains("test", ignoreCase = true) ||
+                        pkgName.contains("browser", ignoreCase = true) ||
+                        pkgName.contains("manager", ignoreCase = true) ||
+                        pkgName.contains("explorer", ignoreCase = true) ||
+                        label.contains("file", ignoreCase = true) ||
+                        label.contains("cleaner", ignoreCase = true) ||
+                        label.contains("tool", ignoreCase = true) -> "Tools"
+                // System apps
+                isSystem -> "System"
+                // Leanback TV apps
+                isLeanback -> "TV Apps"
+                // Default Sideloaded
+                else -> "Sideloaded"
             }
 
-            val category = meta?.category ?: defaultCategory
+            val category = meta?.category ?: detectedCategory
             val isHidden = meta?.isHidden ?: false
             val fastLaunchKey = meta?.fastLaunchKey
 

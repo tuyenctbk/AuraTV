@@ -1,4 +1,231 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Aura TV</string>
+    <string name="search_hint">-
+Hae sovelluksia...</string>
+    <string name="category_all">-
+Kaikki sovellukset</string>
+    <string name="category_favorites">-
+Suosikit</string>
+    <string name="category_tv_apps">-
+TV-sovellukset</string>
+    <string name="category_sideloaded">-
+Sivulla ladattu</string>
+    <string name="category_games">-
+Pelit</string>
+    <string name="category_streaming">-
+Suoratoisto</string>
+    <string name="category_work">-
+Työ</string>
+    <string name="category_system">-
+Järjestelmä</string>
+    <string name="settings_title">-
+Käynnistysohjelman asetukset</string>
+    <string name="grid_columns">-
+Ruudukon sarakkeet</string>
+    <string name="show_app_labels">-
+Näytä sovellustunnisteet</string>
+    <string name="card_aspect_ratio">-
+Kortin kuvasuhde</string>
+    <string name="wallpaper_theme">-
+Taustakuva ja teema</string>
+    <string name="dim_level">-
+Taustakuva Dim</string>
+    <string name="oled_protection">-
+OLED-suojaus</string>
+    <string name="show_storage_widget">-
+Tallennus-widget</string>
+    <string name="show_clock_widget">-
+Kello ja päivämäärä -widget</string>
+    <string name="reduce_motion">-
+Vähennä liikettä / animaatioita</string>
+    <string name="palette_glow">-
+Dynaaminen paletti hehku</string>
+    <string name="accent_color">-
+Mukautettu korostusväri</string>
+    <string name="launch_app">-
+Käynnistä sovellus</string>
+    <string name="add_to_favorites">-
+Lisää suosikkeihin</string>
+    <string name="remove_from_favorites">-
+Poista suosikeista</string>
+    <string name="deep_stop">Pakota pysäytys (syväpysäytys)</string>
+    <string name="deep_stop_desc">-
+Avaa järjestelmän sovellustiedot pakottaaksesi lopettamaan taustamuistin kulutuksen</string>
+    <string name="banner_fixer">-
+Banner Fixer</string>
+    <string name="banner_fixer_desc">-
+Määritä korkearesoluutioinen mukautettu banneripolku tai kuvan URL-osoite</string>
+    <string name="map_hotkey">-
+Karttakaukosäätimen pikanäppäin (0-9)</string>
+    <string name="map_hotkey_desc">-
+Määritä nopean käynnistyksen kaukosäätimen numeronäppäin</string>
+    <string name="change_category">-
+Muuta luokkaa / dynaamista kansiota</string>
+    <string name="hide_app">-
+Piilota sovellus (Stealth Vault)</string>
+    <string name="unhide_app">-
+Näytä sovellus</string>
+    <string name="cancel">-
+Peruuta</string>
+    <string name="save">-
+Tallenna</string>
+    <string name="unlock">-
+Avaa lukitus</string>
+    <string name="got_it">-
+Selvä, sulje opas</string>
+    <string name="close">-
+Sulje</string>
+    <string name="back">-
+Takaisin</string>
+    <string name="next">-
+Seuraavaksi</string>
+    <string name="get_started">-
+Aloita</string>
+    <string name="clear">-
+Selkeä</string>
+    <string name="reset">-
+Palauta banneri</string>
+    <string name="clear_hotkey">-
+Tyhjennä pikanäppäin</string>
+    <string name="backup_export">-
+Varmuuskopiomääritys (JSON)</string>
+    <string name="backup_import">-
+Palauta määritykset (JSON)</string>
+    <string name="clear_cache">-
+Tyhjennä käynnistysohjelman välimuisti</string>
+    <string name="storage_used">-
+Säilytys käytetty</string>
+    <string name="free_space">-
+Ilmainen</string>
+    <string name="voice_search_prompt">Puhu hakusovelluksiin...</string>
+    <string name="no_apps_found">-
+Sovelluksia ei löytynyt</string>
+    <string name="remote_guide">-
+TV:n kaukosäätimen opas</string>
+    <string name="help_dpad_title">-
+D-Pad-nuolet (ylös/alas/vasen/oikea)</string>
+    <string name="help_dpad_desc">-
+Selaa sovelluskuvakkeiden ruudukkoa, yläotsikkopalkkia, hakupalkkia ja mukautettuja luokkakansioita.</string>
+    <string name="help_long_press_title">-
+Paina pitkään OK / Valitse</string>
+    <string name="help_long_press_desc">-
+Avaa sovelluksen kontekstivalikon käynnistääksesi Deep Stop -toiminnon, asettaaksesi mukautettuja pikanäppäimiä tai muokataksesi mukautettuja bannereita.</string>
+    <string name="help_settings_title">-
+Valikkonäppäin / Asetukset-kuvake</string>
+    <string name="help_settings_desc">-
+Avaa käynnistysohjelman asetukset (4K-taustakuvamoottori, mukautetut korostusvärit, suorituskykyinen välimuistin puhdistin).</string>
+    <string name="help_hotkey_title">-
+Numeronäppäimet (0-9)</string>
+    <string name="help_hotkey_desc">-
+Käynnistää välittömästi kartoitetut pikanäppäinsovellukset mistä tahansa käynnistysohjelman kohdasta.</string>
+    <string name="help_vault_title">-
+Stealth Vault -yhdistelmä</string>
+    <string name="help_vault_desc">-
+Paina D-Pad-yhdistelmää: YLÖS, YLÖS, ALAS, VASEN avataksesi tai lukitseksesi piilotetut holvisovellukset.</string>
+    <string name="help_mic_title">-
+Mikrofoni / Assistant-painike</string>
+    <string name="help_mic_desc">-
+Käynnistää ääni-tekstihaun kuuntelijan tuetuissa Android TV:n kaukosäätimissä.</string>
+    <string name="vault_title">-
+Stealth Vaultin avaus</string>
+    <string name="vault_desc">-
+Syötä koodi (oletus: GHOST) tai paina D-Pad-sarjaa YLÖS, YLÖS, ALAS, VASEN aloitusnäytössä.</string>
+    <string name="vault_invalid_passcode">-
+Virheellinen pääsykoodi</string>
+    <string name="transparency_title">-
+Sovellusten löytämisen läpinäkyvyys</string>
+    <string name="transparency_desc">-
+Aura TV vaatii luvan skannata asennettuja sovelluksia (QUERY_ALL_PACKAGES). Tämä on tarpeen sekä alkuperäisten TV-sovellusten että sivulta ladattujen mobiilisovellusten tunnistamiseksi ja näyttämiseksi automaattisesti laitteellasi.
+
+Aura TV on 100 % avoimen lähdekoodin, ilman mainoksia ja kunnioittaa yksityisyyttäsi. Mitään henkilötietoja tai sovellusluetteloa ei koskaan kerätä tai siirretä.</string>
+    <string name="transparency_accept">-
+Ymmärrän &amp; Hyväksyn</string>
+    <string name="onboarding_welcome_title">-
+Tervetuloa Aura TV:hen</string>
+    <string name="onboarding_welcome_desc">-
+Salamannopea, minimalistinen Android TV -käynnistin, joka on suunniteltu vaivattomaan navigointiin, perusteelliseen mukauttamiseen ja puhtaaseen estetiikkaan.</string>
+    <string name="onboarding_cats_title">-
+Älykkäiden sovellusten luokat</string>
+    <string name="onboarding_cats_desc">-
+Järjestä suoratoistosovelluksesi, pelisi ja sivulta ladatut apuohjelmat siististi mukautetuiksi riviosiootsikoiksi live-sovellusten määrällä.</string>
+    <string name="onboarding_oled_title">OLED-suojaus</string>
+    <string name="onboarding_oled_desc">-
+Suojaa televisiosi näyttöä määritettävillä passiivisuusajastimilla, jotka laukaisevat OLED-turvallisen ympäristön mustan näytön automaattisesti.</string>
+    <string name="hotkey_dialog_title">-
+Kartan pikanäppäin: %1$s</string>
+    <string name="hotkey_dialog_desc">-
+Käynnistä tämä sovellus välittömästi painamalla kauko-ohjaimen numeronäppäintä (0-9).</string>
+    <string name="category_dialog_title">-
+Dynaaminen luokka: %1$s</string>
+    <string name="category_dialog_desc">-
+Valitse olemassa oleva luokkakansio tai kirjoita uusi.</string>
+    <string name="create_category_hint">-
+Luo uusi kansion nimi...</string>
+    <string name="banner_dialog_title">-
+Banner Fixer: %1$s</string>
+    <string name="banner_dialog_desc">-
+Anna muokatun 16:9-bannerin paikallinen tiedostopolku tai kuvan URL-osoite.
+Vinkki: Tallenna kuvat tiedostoon /sdcard/GhostLauncher/Banners/%1$s.png automaattista tunnistusta varten.</string>
+    <string name="wallpaper_gradient">-
+Kyberobsidiaanigradientti</string>
+    <string name="wallpaper_custom">-
+Mukautettu paikallinen / galleria-taustakuva</string>
+    <string name="wallpaper_solid">-
+Minimaalinen puhdas OLED musta</string>
+    <string name="toast_backup_saved">-
+Varmuuskopio JSON kopioitu leikepöydälle ja tallennettu</string>
+    <string name="toast_backup_restored">-
+Varmuuskopion palautus onnistui</string>
+    <string name="toast_cache_cleared">-
+Käynnistysohjelman kuvan välimuisti tyhjennettiin onnistuneesti</string>
+    <string name="toast_hotkey_set">-
+Pikanäppäin yhdistetty kohteeseen [%1$d]</string>
+    <string name="toast_hotkey_cleared">-
+Pikanäppäin tyhjennetty</string>
+    <string name="stealth_vault_unlocked">-
+Stealth Vaultin lukitus avattu</string>
+    <string name="stealth_vault_locked">-
+Stealth Vault Lukittu</string>
+    <string name="maybe_later">-
+Ehkä myöhemmin</string>
+    <string name="share_title">-
+Pidätkö Aura TV:stä?</string>
+    <string name="share_desc">-
+Auta ystäviäsi ja perhettäsi löytämään puhdas, salamannopea TV-käynnistyskokemus jakamalla Aura TV!</string>
+    <string name="share_action">-
+Jaa Aura TV</string>
+    <string name="rate_title">-
+Arvioi Aura TV</string>
+    <string name="rate_desc">-
+Jos pidät Aura TV:n käyttämisestä, käytä hetki aikaa arvioidaksesi meitä Play Kaupassa auttaa meitä paljon!</string>
+    <string name="rate_action">Arvioi nyt</string>
+    <string name="shortcut_launch">-
+Käynnistä</string>
+    <string name="shortcut_options">-
+Vaihtoehdot</string>
+    <string name="shortcut_hotkey">-
+Pikanäppäin</string>
+    <string name="shortcut_voice">-
+Ääni</string>
+    <string name="empty_matching">-
+Ei löytynyt sovelluksia, jotka vastaavat \\"%1$s\\"</string>
+    <string name="empty_category">-
+Ei sovelluksia kohteessa \\"%1$s\\"</string>
+    <string name="empty_tip_vault">-
+Vinkki: Jotkut sovellukset voivat olla piilossa Stealth Vaultissa.</string>
+    <string name="empty_tip_category">-
+Yritä valita toinen luokkakansio tai tyhjennä haku.</string>
+    <string name="screensaver_resume_hint">-
+OLED Ambient Saver — Jatka painamalla mitä tahansa painiketta</string>
+    <string name="screensaver_label">-
+OLED-näytönsäästäjän toimettomuuden aikakatkaisu</string>
+    <string name="screensaver_desc">-
+Käynnistää OLED-turvallisen ympäristön mustan näytön, kun sitä ei ole käytetty, jotta näyttö ei pala.</string>
+    <string name="preset_dark_cyber">-
+Dark Cyber</string>
+    <string name="preset_neon_aurora">-
+Aurora</string>
+    <string name="preset_cyber_grid">-
+Deep Slate</string>
 </resources>

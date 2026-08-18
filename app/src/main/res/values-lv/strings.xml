@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aura TV</string>
+    <string name="search_hint">-
+Meklēt lietojumprogrammas...</string>
+    <string name="category_all">-
+Visas lietotnes</string>
+    <string name="category_favorites">-
+Izlase</string>
+    <string name="category_tv_apps">-
+TV lietotnes</string>
+    <string name="category_sideloaded">-
+Ielādēts no sāniem</string>
+    <string name="category_games">-
+Spēles</string>
+    <string name="category_streaming">-
+Straumēšana</string>
+    <string name="category_work">-
+Darbs</string>
+    <string name="category_system">-
+Sistēma</string>
+    <string name="settings_title">-
+Palaišanas programmas iestatījumi</string>
+    <string name="grid_columns">-
+Režģa kolonnas</string>
+    <string name="show_app_labels">-
+Rādīt lietotņu etiķetes</string>
+    <string name="card_aspect_ratio">-
+Kartes malu attiecība</string>
+    <string name="wallpaper_theme">-
+Tapetes un motīvi</string>
+    <string name="dim_level">-
+Tapetes Dim</string>
+    <string name="oled_protection">-
+OLED aizsardzība pret iedegšanu</string>
+    <string name="show_storage_widget">-
+Krātuves logrīks</string>
+    <string name="show_clock_widget">-
+Pulksteņa un datuma logrīks</string>
+    <string name="reduce_motion">-
+Samazināt kustību / animācijas</string>
+    <string name="palette_glow">-
+Dinamiskās paletes mirdzums</string>
+    <string name="accent_color">-
+Pielāgota akcenta krāsa</string>
+    <string name="launch_app">-
+Palaidiet programmu</string>
+    <string name="add_to_favorites">-
+Pievienot izlasei</string>
+    <string name="remove_from_favorites">-
+Noņemt no izlases</string>
+    <string name="deep_stop">Piespiedu apstāšanās (dziļa apstāšanās)</string>
+    <string name="deep_stop_desc">-
+Atveriet sistēmas lietotnes informāciju, lai apturētu fona atmiņas patēriņu</string>
+    <string name="banner_fixer">-
+Reklāmkarogu fiksators</string>
+    <string name="banner_fixer_desc">-
+Piešķiriet augstas izšķirtspējas pielāgotu reklāmkaroga ceļu vai attēla URL</string>
+    <string name="map_hotkey">-
+Kartes tālvadības karstais taustiņš (0-9)</string>
+    <string name="map_hotkey_desc">-
+Piešķiriet ātrās palaišanas tālvadības cipara taustiņu</string>
+    <string name="change_category">-
+Mainīt kategoriju / dinamisko mapi</string>
+    <string name="hide_app">-
+Slēpt lietotni (Stealth Vault)</string>
+    <string name="unhide_app">-
+Parādīt lietotni</string>
+    <string name="cancel">-
+Atcelt</string>
+    <string name="save">-
+Saglabāt</string>
+    <string name="unlock">-
+Atbloķēt</string>
+    <string name="got_it">-
+Sapratu, aizvērt rokasgrāmatu</string>
+    <string name="close">-
+Aizvērt</string>
+    <string name="back">-
+Atpakaļ</string>
+    <string name="next">-
+Tālāk</string>
+    <string name="get_started">-
+Sāciet darbu</string>
+    <string name="clear">-
+Skaidrs</string>
+    <string name="reset">-
+Atiestatīt reklāmkarogu</string>
+    <string name="clear_hotkey">-
+Notīrīt karsto taustiņu</string>
+    <string name="backup_export">-
+Rezerves konfigurācija (JSON)</string>
+    <string name="backup_import">-
+Atjaunot konfigurāciju (JSON)</string>
+    <string name="clear_cache">-
+Notīriet palaidēja kešatmiņu</string>
+    <string name="storage_used">-
+Uzglabāšana Lietota</string>
+    <string name="free_space">-
+Bezmaksas</string>
+    <string name="voice_search_prompt">Runājiet, lai meklētu lietotnes...</string>
+    <string name="no_apps_found">-
+Nav atrasta neviena lietojumprogramma</string>
+    <string name="remote_guide">-
+Televizora tālvadības pults rokasgrāmata</string>
+    <string name="help_dpad_title">-
+D-pad bultiņas (augšup/lejup/pa kreisi/pa labi)</string>
+    <string name="help_dpad_desc">-
+Pārvietojieties pa lietotņu ikonu režģi, augšējo galvenes joslu, meklēšanas joslu un pielāgotu kategoriju mapēm.</string>
+    <string name="help_long_press_title">-
+Turiet nospiestu OK/Atlasīt</string>
+    <string name="help_long_press_desc">-
+Tiek atvērta lietotņu kontekstizvēlne, lai aktivizētu dziļo pieturu, iestatītu pielāgotus karstos taustiņus vai rediģētu pielāgotus reklāmkarogus.</string>
+    <string name="help_settings_title">-
+Izvēlnes taustiņš/Iestatījumu ikona</string>
+    <string name="help_settings_desc">-
+Tiek atvērti palaidēja iestatījumi (4K fona attēlu programma, pielāgotas akcentu krāsas, veiktspējas kešatmiņas tīrītājs).</string>
+    <string name="help_hotkey_title">-
+Ciparu taustiņi (0–9)</string>
+    <string name="help_hotkey_desc">-
+Nekavējoties palaiž kartētās karsto taustiņu lietojumprogrammas no jebkuras vietas palaidējā.</string>
+    <string name="help_vault_title">-
+Stealth Vault Combo</string>
+    <string name="help_vault_desc">-
+Nospiediet D-Pad kombināciju: UP, UP, DOWN, LEFT, lai atbloķētu vai bloķētu slēptās glabātuves lietojumprogrammas.</string>
+    <string name="help_mic_title">-
+Mikrofona/asistenta poga</string>
+    <string name="help_mic_desc">-
+Iedarbina balss-teksta meklēšanas klausītāju atbalstītajās Android TV tālvadības pultīs.</string>
+    <string name="vault_title">-
+Stealth Vault atbloķēšana</string>
+    <string name="vault_desc">-
+Ievadiet kodu (noklusējums: GHOST) vai sākuma ekrānā nospiediet D-Pad secību UP, UP, DOWN, LEFT.</string>
+    <string name="vault_invalid_passcode">-
+Nederīgs piekļuves kods</string>
+    <string name="transparency_title">-
+Lietotņu atklāšanas caurspīdīgums</string>
+    <string name="transparency_desc">-
+Aura TV nepieciešama atļauja skenēt instalētās lietojumprogrammas (QUERY_ALL_PACKAGES). Tas ir nepieciešams, lai jūsu ierīcē automātiski noteiktu un parādītu gan vietējās TV lietotnes, gan sānu ielādes mobilās lietotnes.
+
+Aura TV ir 100% atvērtā koda, bez reklāmām un respektē jūsu privātumu. Personas dati vai lietotņu saraksts nekad netiek vākti vai pārsūtīti.</string>
+    <string name="transparency_accept">-
+Es saprotu un pieņemu</string>
+    <string name="onboarding_welcome_title">-
+Laipni lūdzam Aura TV</string>
+    <string name="onboarding_welcome_desc">-
+Zibens ātrs, minimālistisks Android TV palaidējs, kas paredzēts vienkāršai navigācijai, dziļai pielāgošanai un tīrai estētikai.</string>
+    <string name="onboarding_cats_title">-
+Viedo lietotņu kategorijas</string>
+    <string name="onboarding_cats_desc">-
+Kārtīgi sakārtojiet savas straumēšanas lietotnes, spēles un sānu ielādes utilītas pielāgotās rindu sadaļu galvenēs ar reāllaika lietotņu skaitu.</string>
+    <string name="onboarding_oled_title">OLED aizsardzība pret iedegšanu</string>
+    <string name="onboarding_oled_desc">-
+Aizsargājiet savu televizora displeju ar konfigurējamiem neaktivitātes taimeriem, kas automātiski aktivizē OLED drošu apkārtējo melno ekrānu.</string>
+    <string name="hotkey_dialog_title">-
+Kartes karstais taustiņš: %1$s</string>
+    <string name="hotkey_dialog_desc">-
+Nospiediet tālvadības cipara taustiņu (0–9) palaišanas programmā, lai nekavējoties palaistu šo lietojumprogrammu.</string>
+    <string name="category_dialog_title">-
+Dinamiskā kategorija: %1$s</string>
+    <string name="category_dialog_desc">-
+Atlasiet esošu kategorijas mapi vai ierakstiet jaunu.</string>
+    <string name="create_category_hint">-
+Izveidot jaunu mapes nosaukumu...</string>
+    <string name="banner_dialog_title">-
+Reklāmkarogu fiksators: %1$s</string>
+    <string name="banner_dialog_desc">-
+Ievadiet pielāgotā 16:9 reklāmkaroga vietējā faila ceļu vai attēla URL.
+Padoms. Saglabājiet attēlus mapē /sdcard/GhostLauncher/Banners/%1$s.png automātiskai noteikšanai.</string>
+    <string name="wallpaper_gradient">-
+Kiberobsidiāna gradients</string>
+    <string name="wallpaper_custom">-
+Pielāgota vietējā/galerija fona tapete</string>
+    <string name="wallpaper_solid">-
+Minimāli tīrs OLED melns</string>
+    <string name="toast_backup_saved">-
+Dublējums JSON ir kopēts starpliktuvē un saglabāts</string>
+    <string name="toast_backup_restored">-
+Dublējums ir veiksmīgi atjaunots</string>
+    <string name="toast_cache_cleared">-
+Palaišanas programmas attēla kešatmiņa ir veiksmīgi notīrīta</string>
+    <string name="toast_hotkey_set">-
+Karstais taustiņš kartēts uz [%1$d]</string>
+    <string name="toast_hotkey_cleared">-
+Karstais taustiņš notīrīts</string>
+    <string name="stealth_vault_unlocked">-
+Stealth Vault atbloķēts</string>
+    <string name="stealth_vault_locked">-
+Stealth Vault Locked</string>
+    <string name="maybe_later">-
+Varbūt Vēlāk</string>
+    <string name="share_title">-
+Vai jums patīk Aura TV?</string>
+    <string name="share_desc">-
+Palīdziet saviem draugiem un ģimenei atklāt tīru, zibens ātru TV palaišanas pieredzi, kopīgojot Aura TV!</string>
+    <string name="share_action">-
+Kopīgojiet Aura TV</string>
+    <string name="rate_title">-
+Novērtējiet Aura TV</string>
+    <string name="rate_desc">-
+Ja jums patīk izmantot Aura TV, veltiet laiku, lai novērtētu mūs Play veikalā, tas mums ļoti palīdz!</string>
+    <string name="rate_action">Novērtējiet tūlīt</string>
+    <string name="shortcut_launch">-
+Palaist</string>
+    <string name="shortcut_options">-
+Iespējas</string>
+    <string name="shortcut_hotkey">-
+Karstais taustiņš</string>
+    <string name="shortcut_voice">-
+Balss</string>
+    <string name="empty_matching">-
+Nav atrasta neviena lietotne, kas atbilst \\"%1$s\\"</string>
+    <string name="empty_category">-
+Nav nevienas lietojumprogrammas mapē \\"%1$s\\"</string>
+    <string name="empty_tip_vault">-
+Padoms. Dažas lietotnes var būt paslēptas Stealth Vault.</string>
+    <string name="empty_tip_category">-
+Mēģiniet atlasīt citu kategorijas mapi vai notīrīt meklēšanu.</string>
+    <string name="screensaver_resume_hint">-
+OLED Ambient Saver — nospiediet jebkuru pogu, lai atsāktu</string>
+    <string name="screensaver_label">-
+OLED ekrānsaudzētāja neaktivitātes taimauts</string>
+    <string name="screensaver_desc">-
+Pēc neaktivitātes aktivizē OLED drošu apkārtējās vides melno ekrānu, lai novērstu displeja izdegšanu.</string>
+    <string name="preset_dark_cyber">-
+Dark Cyber</string>
+    <string name="preset_neon_aurora">-
+Aurora</string>
+    <string name="preset_cyber_grid">-
+Dziļais šīferis</string>
+</resources>

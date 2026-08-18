@@ -104,6 +104,24 @@ class LauncherRepository(
         }
     }
 
+    suspend fun recordAppLaunch(packageName: String) {
+        withContext(Dispatchers.IO) {
+            val now = System.currentTimeMillis()
+            val existing = appDao.getMetadata(packageName)
+            if (existing != null) {
+                appDao.incrementLaunchStats(packageName, now)
+            } else {
+                appDao.insertOrUpdate(
+                    AppMetadataEntity(
+                        packageName = packageName,
+                        launchCount = 1,
+                        lastLaunchedTime = now
+                    )
+                )
+            }
+        }
+    }
+
     suspend fun clearAllMetadata() {
         withContext(Dispatchers.IO) {
             appDao.clearAll()
@@ -249,9 +267,20 @@ class LauncherRepository(
             val fastLaunchKey = meta?.fastLaunchKey
 
             var versionName = ""
+            var versionCode = 0L
+            var firstInstallTime = 0L
+            var lastUpdateTime = 0L
             try {
                 val pInfo = pm.getPackageInfo(pkgName, 0)
                 versionName = pInfo.versionName ?: ""
+                versionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                    pInfo.longVersionCode
+                } else {
+                    @Suppress("DEPRECATION")
+                    pInfo.versionCode.toLong()
+                }
+                firstInstallTime = pInfo.firstInstallTime
+                lastUpdateTime = pInfo.lastUpdateTime
             } catch (e: Exception) {
                 // ignore
             }
@@ -269,7 +298,12 @@ class LauncherRepository(
                     isHidden = isHidden,
                     fastLaunchKey = fastLaunchKey,
                     isSystem = isSystem,
-                    versionName = versionName
+                    versionName = versionName,
+                    versionCode = versionCode,
+                    firstInstallTime = firstInstallTime,
+                    lastUpdateTime = lastUpdateTime,
+                    launchCount = meta?.launchCount ?: 0,
+                    lastLaunchedTime = meta?.lastLaunchedTime ?: 0L
                 )
             )
         }

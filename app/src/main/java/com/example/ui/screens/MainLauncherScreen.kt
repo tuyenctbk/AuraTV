@@ -85,8 +85,10 @@ import com.example.R
 import com.example.data.model.AppItem
 import com.example.ui.components.AppCard
 import com.example.ui.components.AppOptionDialog
+import com.example.ui.components.AppVisibilityDialog
 import com.example.ui.components.CategoryMoveDialog
 import com.example.ui.components.CustomBannerDialog
+import com.example.ui.components.FolderManagerDialog
 import com.example.ui.components.HeaderBar
 import com.example.ui.components.HelpOverlayDialog
 import com.example.ui.components.HiddenVaultDialog
@@ -122,6 +124,8 @@ fun MainLauncherScreen(
     val showTransparencyNotice by viewModel.showTransparencyNotice.collectAsStateWithLifecycle()
     val showSharePrompt by viewModel.showSharePrompt.collectAsStateWithLifecycle()
     val showRatePrompt by viewModel.showRatePrompt.collectAsStateWithLifecycle()
+    val showAppVisibilityManager by viewModel.showAppVisibilityManager.collectAsStateWithLifecycle()
+    val showFolderManager by viewModel.showFolderManager.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val speechRecognizerLauncher = rememberLauncherForActivityResult(
@@ -173,9 +177,9 @@ fun MainLauncherScreen(
         map
     }
 
-    // Filter apps
-    val filteredApps = remember(allApps, searchQuery, selectedCategory, isVaultUnlocked) {
-        allApps.filter { app ->
+    // Filter & Sort apps
+    val filteredApps = remember(allApps, searchQuery, selectedCategory, isVaultUnlocked, settings.sortOrder) {
+        val baseFiltered = allApps.filter { app ->
             // Vault filter
             if (app.isHidden && !isVaultUnlocked) return@filter false
 
@@ -191,6 +195,35 @@ fun MainLauncherScreen(
             }
 
             true
+        }
+
+        when (settings.sortOrder) {
+            "RECENTLY_USED" -> {
+                baseFiltered.sortedWith(
+                    compareByDescending<AppItem> { it.lastLaunchedTime }
+                        .thenByDescending { it.launchCount }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
+            "FREQUENTLY_USED" -> {
+                baseFiltered.sortedWith(
+                    compareByDescending<AppItem> { it.launchCount }
+                        .thenByDescending { it.lastLaunchedTime }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
+            "INSTALL_DATE" -> {
+                baseFiltered.sortedWith(
+                    compareByDescending<AppItem> { it.firstInstallTime }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
+            else -> { // "ALPHABETICAL"
+                baseFiltered.sortedWith(
+                    compareBy<AppItem> { if (it.category == "Favorites") 0 else 1 }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
         }
     }
 
@@ -415,7 +448,8 @@ fun MainLauncherScreen(
                     onOpenCustomBanner = { viewModel.showCustomBannerDialogForApp.value = it },
                     onOpenHotkeyAssign = { viewModel.showHotkeyDialogForApp.value = it },
                     onOpenCategoryMove = { viewModel.showCategoryDialogForApp.value = it },
-                    onToggleHide = { viewModel.toggleAppHidden(it) }
+                    onToggleHide = { viewModel.toggleAppHidden(it) },
+                    onUninstall = { viewModel.uninstallApp(it) }
                 )
             }
 
@@ -450,6 +484,25 @@ fun MainLauncherScreen(
                 )
             }
 
+            if (showAppVisibilityManager) {
+                AppVisibilityDialog(
+                    allApps = allApps,
+                    onToggleVisibility = { viewModel.toggleAppHidden(it) },
+                    onDismiss = { viewModel.showAppVisibilityManager.value = false }
+                )
+            }
+
+            if (showFolderManager) {
+                FolderManagerDialog(
+                    allApps = allApps,
+                    existingCategories = categoryList,
+                    onMoveAppToCategory = { app, newCategory ->
+                        viewModel.setAppCategory(app, newCategory)
+                    },
+                    onDismiss = { viewModel.showFolderManager.value = false }
+                )
+            }
+
             if (showVaultUnlockModal) {
                 HiddenVaultDialog(
                     onDismiss = { viewModel.showVaultUnlockModal.value = false },
@@ -468,7 +521,9 @@ fun MainLauncherScreen(
                     onResetAllBanners = { viewModel.resetAllBannersAndMetadata() },
                     onToggleVaultUnlock = { viewModel.isVaultUnlocked.value = !isVaultUnlocked },
                     onClearCache = { viewModel.clearImageCache() },
-                    onOpenHelp = { viewModel.showHelpOverlay.value = true }
+                    onOpenHelp = { viewModel.showHelpOverlay.value = true },
+                    onOpenAppVisibilityManager = { viewModel.showAppVisibilityManager.value = true },
+                    onOpenFolderManager = { viewModel.showFolderManager.value = true }
                 )
             }
 

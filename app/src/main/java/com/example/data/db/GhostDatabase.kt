@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(
     entities = [AppEntity::class, UserSettingsEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class GhostDatabase : RoomDatabase() {

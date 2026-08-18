@@ -120,4 +120,21 @@ Tip: Save images to /sdcard/GhostLauncher/Banners/%1$s.png for auto-detection.</
     <string name="preset_dark_cyber">Dark Cyber</string>
     <string name="preset_neon_aurora">Aurora</string>
     <string name="preset_cyber_grid">Deep Slate</string>
+    <string name="system_app_settings">System App Settings</string>
+    <string name="uninstall_app">Uninstall App</string>
+    <string name="uninstall_confirm_title">Uninstall %1$s?</string>
+    <string name="uninstall_system_app_warning">System app cannot be uninstalled. Opening App Info.</string>
+    <string name="app_info_details">App Details</string>
+    <string name="version_code">Version</string>
+    <string name="launch_count">Usage</string>
+    <string name="install_date">Installed</string>
+    <string name="last_used">Last Used</string>
+    <string name="app_visibility_manager">App Visibility Manager</string>
+    <string name="app_visibility_desc">Toggle which applications appear on your home screen grid</string>
+    <string name="folder_manager">Folder &amp; Category Manager</string>
+    <string name="sort_order">Sort Order</string>
+    <string name="sort_alphabetical">Alphabetical (A-Z)</string>
+    <string name="sort_recently_used">Most Recently Used</string>
+    <string name="sort_frequently_used">Most Frequently Used</string>
+    <string name="sort_install_date">Installation Date</string>
 </resources>

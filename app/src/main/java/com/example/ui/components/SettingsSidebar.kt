@@ -70,7 +70,9 @@ fun SettingsSidebar(
     onResetAllBanners: () -> Unit,
     onToggleVaultUnlock: () -> Unit,
     onClearCache: (() -> Unit)? = null,
-    onOpenHelp: (() -> Unit)? = null
+    onOpenHelp: (() -> Unit)? = null,
+    onOpenAppVisibilityManager: (() -> Unit)? = null,
+    onOpenFolderManager: (() -> Unit)? = null
 ) {
     var versionClickCount by remember { mutableIntStateOf(0) }
 
@@ -246,6 +248,144 @@ fun SettingsSidebar(
                     checked = settings.showClockWidget,
                     onCheckedChange = { onUpdateSettings(settings.copy(showClockWidget = it)) }
                 )
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // App Grid Sorting Order
+                Text(
+                    text = "App Grid Sort Order",
+                    color = Color.White,
+                    fontSize = 13.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
+                    horizontalArrangement = Arrangement.spacedBy(6.dp)
+                ) {
+                    listOf(
+                        "ALPHABETICAL" to "A-Z",
+                        "RECENTLY_USED" to "Recent",
+                        "FREQUENTLY_USED" to "Frequent",
+                        "INSTALL_DATE" to "Newest"
+                    ).forEach { (sortKey, sortLabel) ->
+                        val isSelected = settings.sortOrder == sortKey
+                        var isSortFocused by remember { mutableStateOf(false) }
+
+                        Box(
+                            modifier = Modifier
+                                .weight(1f)
+                                .height(36.dp)
+                                .clip(RoundedCornerShape(8.dp))
+                                .background(if (isSortFocused) TvFocusGlow else (if (isSelected) TvPrimary else TvSurfaceVariant))
+                                .onFocusChanged { isSortFocused = it.isFocused }
+                                .focusable()
+                                .clickable {
+                                    onUpdateSettings(settings.copy(sortOrder = sortKey))
+                                },
+                            contentAlignment = Alignment.Center
+                        ) {
+                            Text(
+                                text = sortLabel,
+                                color = if (isSortFocused || isSelected) Color.Black else Color.White,
+                                fontWeight = FontWeight.Bold,
+                                fontSize = 11.sp
+                            )
+                        }
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(10.dp))
+
+                // App Visibility & Folder Shortcuts
+                if (onOpenAppVisibilityManager != null || onOpenFolderManager != null) {
+                    Text(
+                        text = "App & Folder Organization",
+                        color = Color.White,
+                        fontSize = 13.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                    Spacer(modifier = Modifier.height(6.dp))
+
+                    if (onOpenAppVisibilityManager != null) {
+                        var isVisBtnFocused by remember { mutableStateOf(false) }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(if (isVisBtnFocused) TvFocusGlow else TvSurfaceVariant.copy(alpha = 0.6f))
+                                .border(1.dp, if (isVisBtnFocused) TvFocusGlow else Color.Transparent, RoundedCornerShape(10.dp))
+                                .onFocusChanged { isVisBtnFocused = it.isFocused }
+                                .focusable()
+                                .clickable { onOpenAppVisibilityManager() }
+                                .padding(horizontal = 12.dp, vertical = 10.dp)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Default.Tv,
+                                    contentDescription = null,
+                                    tint = if (isVisBtnFocused) Color.Black else TvPrimary,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Column {
+                                    Text(
+                                        text = "Manage App Visibility (Hide/Show)",
+                                        color = if (isVisBtnFocused) Color.Black else Color.White,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        text = "Toggle which apps appear on your home screen",
+                                        color = if (isVisBtnFocused) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.5f),
+                                        fontSize = 10.sp
+                                    )
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(6.dp))
+                    }
+
+                    if (onOpenFolderManager != null) {
+                        var isFldBtnFocused by remember { mutableStateOf(false) }
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(if (isFldBtnFocused) TvFocusGlow else TvSurfaceVariant.copy(alpha = 0.6f))
+                                .border(1.dp, if (isFldBtnFocused) TvFocusGlow else Color.Transparent, RoundedCornerShape(10.dp))
+                                .onFocusChanged { isFldBtnFocused = it.isFocused }
+                                .focusable()
+                                .clickable { onOpenFolderManager() }
+                                .padding(horizontal = 12.dp, vertical = 10.dp)
+                        ) {
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                Icon(
+                                    imageVector = Icons.Default.Folder,
+                                    contentDescription = null,
+                                    tint = if (isFldBtnFocused) Color.Black else TvPrimary,
+                                    modifier = Modifier.size(18.dp)
+                                )
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Column {
+                                    Text(
+                                        text = "Organize User Folders",
+                                        color = if (isFldBtnFocused) Color.Black else Color.White,
+                                        fontSize = 12.sp,
+                                        fontWeight = FontWeight.Bold
+                                    )
+                                    Text(
+                                        text = "Create folders and move icons for a clean home screen",
+                                        color = if (isFldBtnFocused) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.5f),
+                                        fontSize = 10.sp
+                                    )
+                                }
+                            }
+                        }
+                    }
+                }
 
                 Spacer(modifier = Modifier.height(10.dp))
 

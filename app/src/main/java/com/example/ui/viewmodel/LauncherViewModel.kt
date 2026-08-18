@@ -53,6 +53,8 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
     val showTransparencyNotice = MutableStateFlow(false)
     val showSharePrompt = MutableStateFlow(false)
     val showRatePrompt = MutableStateFlow(false)
+    val showAppVisibilityManager = MutableStateFlow(false)
+    val showFolderManager = MutableStateFlow(false)
 
     private val isFirebaseAvailable: Boolean by lazy {
         try {
@@ -218,6 +220,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
         try {
             val newCount = settings.value.appLaunchCount + 1
             viewModelScope.launch {
+                repository.recordAppLaunch(app.packageName)
                 repository.updateSettings(settings.value.copy(appLaunchCount = newCount))
                 if (newCount >= 5 && !settings.value.hasDismissedSharePrompt && !showRatePrompt.value) {
                     showSharePrompt.value = true
@@ -248,6 +251,41 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                 } catch (_: Exception) {}
             }
             Toast.makeText(getApplication(), "Error launching ${app.label}: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    fun uninstallApp(app: AppItem) {
+        try {
+            if (app.isSystem) {
+                Toast.makeText(getApplication(), "System app cannot be uninstalled. Opening App Info.", Toast.LENGTH_SHORT).show()
+                openAppDetails(app)
+                return
+            }
+            val intent = Intent(Intent.ACTION_UNINSTALL_PACKAGE).apply {
+                data = Uri.parse("package:${app.packageName}")
+                putExtra(Intent.EXTRA_RETURN_RESULT, true)
+                addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+            }
+            getApplication<Application>().startActivity(intent)
+            safeLogEvent("app_uninstall_requested", Bundle().apply {
+                putString("package_name", app.packageName)
+            })
+        } catch (e: Exception) {
+            try {
+                val fallbackIntent = Intent(Intent.ACTION_DELETE).apply {
+                    data = Uri.parse("package:${app.packageName}")
+                    addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                }
+                getApplication<Application>().startActivity(fallbackIntent)
+            } catch (ex: Exception) {
+                Toast.makeText(getApplication(), "Unable to start uninstallation: ${ex.localizedMessage}", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    fun setSortOrder(sortOrder: String) {
+        viewModelScope.launch {
+            repository.updateSettings(settings.value.copy(sortOrder = sortOrder))
         }
     }
 

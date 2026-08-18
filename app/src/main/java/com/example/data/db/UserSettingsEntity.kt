@@ -25,5 +25,6 @@ data class UserSettingsEntity(
     val isOnboardingCompleted: Boolean = false,
     val appLaunchCount: Int = 0,
     val hasDismissedSharePrompt: Boolean = false,
-    val hasDismissedRatePrompt: Boolean = false
+    val hasDismissedRatePrompt: Boolean = false,
+    val sortOrder: String = "ALPHABETICAL"
 )

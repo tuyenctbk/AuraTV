@@ -44,10 +44,12 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
 import com.example.ui.theme.TvSurfaceVariant
@@ -80,20 +82,20 @@ fun HelpOverlayDialog(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.HelpOutline,
-                            contentDescription = "Help Legend",
+                            contentDescription = stringResource(R.string.remote_guide),
                             tint = TvPrimary,
                             modifier = Modifier.size(26.dp)
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Column {
                             Text(
-                                text = "TV Remote Control Guide",
+                                text = stringResource(R.string.remote_guide),
                                 style = MaterialTheme.typography.titleLarge,
                                 color = Color.White,
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "Shortcuts & Navigation Controls",
+                                text = "Aura TV Shortcuts",
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color.White.copy(alpha = 0.6f)
                             )
@@ -113,7 +115,7 @@ fun HelpOverlayDialog(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.close),
                             tint = if (isCloseFocused) Color.Black else Color.White,
                             modifier = Modifier.size(18.dp)
                         )
@@ -127,38 +129,38 @@ fun HelpOverlayDialog(
                 // Shortcuts Legend Items
                 HelpShortcutRow(
                     icon = Icons.Default.Navigation,
-                    title = "D-Pad Arrows (Up / Down / Left / Right)",
-                    description = "Navigate through app icons grid, top header bar, search bar, and custom category folders."
+                    title = stringResource(R.string.help_dpad_title),
+                    description = stringResource(R.string.help_dpad_desc)
                 )
 
                 HelpShortcutRow(
                     icon = Icons.Default.TouchApp,
-                    title = "Long Press OK / Select",
-                    description = "Opens the App Context Menu to trigger Deep Stop (Force Stop), set custom hotkeys, or edit custom banners."
+                    title = stringResource(R.string.help_long_press_title),
+                    description = stringResource(R.string.help_long_press_desc)
                 )
 
                 HelpShortcutRow(
                     icon = Icons.Default.Settings,
-                    title = "Menu Key / Settings Icon",
-                    description = "Opens Launcher Settings (4K Wallpaper engine, custom accent colors, performance cache cleaner, backup & restore)."
+                    title = stringResource(R.string.help_settings_title),
+                    description = stringResource(R.string.help_settings_desc)
                 )
 
                 HelpShortcutRow(
                     icon = Icons.Default.Mic,
-                    title = "Mic / Assistant Button",
-                    description = "Triggers voice-to-text search listener on supported Android TV remotes."
+                    title = stringResource(R.string.help_mic_title),
+                    description = stringResource(R.string.help_mic_desc)
                 )
 
                 HelpShortcutRow(
                     icon = Icons.Default.Numbers,
-                    title = "Number Keys (0 - 9)",
-                    description = "Instantly launches mapped hotkey applications from anywhere on the launcher."
+                    title = stringResource(R.string.help_hotkey_title),
+                    description = stringResource(R.string.help_hotkey_desc)
                 )
 
                 HelpShortcutRow(
                     icon = Icons.Default.Security,
-                    title = "Stealth Vault Code",
-                    description = "Press D-Pad combo: UP, UP, DOWN, LEFT to unlock or lock hidden vault applications."
+                    title = stringResource(R.string.help_vault_title),
+                    description = stringResource(R.string.help_vault_desc)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -177,7 +179,7 @@ fun HelpOverlayDialog(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Got It, Close Legend",
+                        text = stringResource(R.string.got_it),
                         color = Color.Black,
                         fontSize = 14.sp,
                         fontWeight = FontWeight.Bold

@@ -54,10 +54,12 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.R
 import com.example.data.model.StorageInfo
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
@@ -245,7 +247,7 @@ fun HeaderBar(
                 decorationBox = { innerTextField ->
                     if (searchQuery.isEmpty()) {
                         Text(
-                            text = "Search installed apps...",
+                            text = stringResource(R.string.search_hint),
                             color = Color.White.copy(alpha = 0.4f),
                             fontSize = 13.sp
                         )

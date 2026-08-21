@@ -14,5 +14,11 @@ data class AppItem(
     val isHidden: Boolean = false,
     val fastLaunchKey: Int? = null,
     val isSystem: Boolean = false,
-    val versionName: String = ""
+    val versionName: String = "",
+    val versionCode: Long = 0L,
+    val firstInstallTime: Long = 0L,
+    val lastUpdateTime: Long = 0L,
+    val launchCount: Int = 0,
+    val lastLaunchedTime: Long = 0L
 )
+

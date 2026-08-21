@@ -37,10 +37,12 @@ import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.R
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
 import com.example.ui.theme.TvSurfaceVariant
@@ -94,9 +96,9 @@ fun OnboardingDialog(
             Spacer(modifier = Modifier.height(20.dp))
 
             val title = when (step) {
-                0 -> "Welcome to Aura TV"
-                1 -> "Smart App Categories"
-                else -> "OLED Burn-In Protection"
+                0 -> stringResource(R.string.onboarding_welcome_title)
+                1 -> stringResource(R.string.onboarding_cats_title)
+                else -> stringResource(R.string.onboarding_oled_title)
             }
 
             Text(
@@ -110,9 +112,9 @@ fun OnboardingDialog(
             Spacer(modifier = Modifier.height(10.dp))
 
             val desc = when (step) {
-                0 -> "A lightning-fast, minimalist Android TV launcher designed for effortless navigation, deep customization, and clean aesthetics."
-                1 -> "Organize your streaming apps, games, and sideloaded utilities neatly into custom row section headers with live app counts."
-                else -> "Protect your TV display with configurable inactivity timers that trigger an OLED-safe ambient black screen automatically."
+                0 -> stringResource(R.string.onboarding_welcome_desc)
+                1 -> stringResource(R.string.onboarding_cats_desc)
+                else -> stringResource(R.string.onboarding_oled_desc)
             }
 
             Text(
@@ -158,7 +160,7 @@ fun OnboardingDialog(
                             .height(48.dp)
                             .onFocusChanged { isBackFocused = it.isFocused }
                     ) {
-                        Text(text = "Back", color = if (isBackFocused) Color.Black else Color.White, fontWeight = FontWeight.Bold)
+                        Text(text = stringResource(R.string.back), color = if (isBackFocused) Color.Black else Color.White, fontWeight = FontWeight.Bold)
                     }
                 }
 
@@ -181,7 +183,7 @@ fun OnboardingDialog(
                         .onFocusChanged { isNextFocused = it.isFocused }
                 ) {
                     Text(
-                        text = if (step < 2) "Next" else "Get Started",
+                        text = if (step < 2) stringResource(R.string.next) else stringResource(R.string.get_started),
                         color = Color.Black,
                         fontWeight = FontWeight.Bold
                     )

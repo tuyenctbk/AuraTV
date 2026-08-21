@@ -117,7 +117,6 @@ fun AppCard(
                 )
                 .onFocusChanged { isFocused = it.isFocused }
                 .focusable()
-                .clickable { onLaunch(app) }
                 .combinedClickable(
                     onClick = { onLaunch(app) },
                     onLongClick = { onOptions(app) }
@@ -125,6 +124,9 @@ fun AppCard(
                 .onKeyEvent { keyEvent ->
                     if (keyEvent.key == Key.Menu || keyEvent.key == Key.Guide) {
                         onOptions(app)
+                        true
+                    } else if (keyEvent.key == Key.DirectionCenter || keyEvent.key == Key.Enter || keyEvent.key == Key.NumPadEnter) {
+                        onLaunch(app)
                         true
                     } else {
                         false

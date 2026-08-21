@@ -36,15 +36,18 @@ import androidx.tv.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Apps
 import androidx.compose.material.icons.filled.Android
+import androidx.compose.material.icons.filled.Apps
+import androidx.compose.material.icons.filled.Build
 import androidx.compose.material.icons.filled.Folder
+import androidx.compose.material.icons.filled.PermMedia
 import androidx.compose.material.icons.filled.PlayArrow
 import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material.icons.filled.SportsEsports
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.filled.Tv
 import androidx.compose.material.icons.filled.TvOff
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material.icons.filled.Star
 import com.example.ui.components.OnboardingDialog
 import com.example.ui.components.SuggestionDialog
 import androidx.compose.material3.Icon
@@ -73,15 +76,19 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.input.key.type
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.R
 import com.example.data.model.AppItem
 import com.example.ui.components.AppCard
 import com.example.ui.components.AppOptionDialog
+import com.example.ui.components.AppVisibilityDialog
 import com.example.ui.components.CategoryMoveDialog
 import com.example.ui.components.CustomBannerDialog
+import com.example.ui.components.FolderManagerDialog
 import com.example.ui.components.HeaderBar
 import com.example.ui.components.HelpOverlayDialog
 import com.example.ui.components.HiddenVaultDialog
@@ -117,6 +124,8 @@ fun MainLauncherScreen(
     val showTransparencyNotice by viewModel.showTransparencyNotice.collectAsStateWithLifecycle()
     val showSharePrompt by viewModel.showSharePrompt.collectAsStateWithLifecycle()
     val showRatePrompt by viewModel.showRatePrompt.collectAsStateWithLifecycle()
+    val showAppVisibilityManager by viewModel.showAppVisibilityManager.collectAsStateWithLifecycle()
+    val showFolderManager by viewModel.showFolderManager.collectAsStateWithLifecycle()
 
     val context = LocalContext.current
     val speechRecognizerLauncher = rememberLauncherForActivityResult(
@@ -148,7 +157,7 @@ fun MainLauncherScreen(
 
     // Derive list of available categories
     val categoryList = remember(allApps, settings.categoriesOrder) {
-        val baseCategories = listOf("All", "Favorites", "TV Apps", "Sideloaded", "Streaming", "Games", "System")
+        val baseCategories = listOf("All", "Favorites", "Games", "Media", "Tools", "TV Apps", "Sideloaded", "Streaming", "System")
         val customFolders = settings.categoriesOrder.split(",").map { it.trim() }.filter { it.isNotEmpty() }
         val appCategories = allApps.map { it.category }.distinct()
         (baseCategories + customFolders + appCategories).distinct()
@@ -168,9 +177,9 @@ fun MainLauncherScreen(
         map
     }
 
-    // Filter apps
-    val filteredApps = remember(allApps, searchQuery, selectedCategory, isVaultUnlocked) {
-        allApps.filter { app ->
+    // Filter & Sort apps
+    val filteredApps = remember(allApps, searchQuery, selectedCategory, isVaultUnlocked, settings.sortOrder) {
+        val baseFiltered = allApps.filter { app ->
             // Vault filter
             if (app.isHidden && !isVaultUnlocked) return@filter false
 
@@ -186,6 +195,35 @@ fun MainLauncherScreen(
             }
 
             true
+        }
+
+        when (settings.sortOrder) {
+            "RECENTLY_USED" -> {
+                baseFiltered.sortedWith(
+                    compareByDescending<AppItem> { it.lastLaunchedTime }
+                        .thenByDescending { it.launchCount }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
+            "FREQUENTLY_USED" -> {
+                baseFiltered.sortedWith(
+                    compareByDescending<AppItem> { it.launchCount }
+                        .thenByDescending { it.lastLaunchedTime }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
+            "INSTALL_DATE" -> {
+                baseFiltered.sortedWith(
+                    compareByDescending<AppItem> { it.firstInstallTime }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
+            else -> { // "ALPHABETICAL"
+                baseFiltered.sortedWith(
+                    compareBy<AppItem> { if (it.category == "Favorites") 0 else 1 }
+                        .thenBy { it.label.lowercase() }
+                )
+            }
         }
     }
 
@@ -410,7 +448,8 @@ fun MainLauncherScreen(
                     onOpenCustomBanner = { viewModel.showCustomBannerDialogForApp.value = it },
                     onOpenHotkeyAssign = { viewModel.showHotkeyDialogForApp.value = it },
                     onOpenCategoryMove = { viewModel.showCategoryDialogForApp.value = it },
-                    onToggleHide = { viewModel.toggleAppHidden(it) }
+                    onToggleHide = { viewModel.toggleAppHidden(it) },
+                    onUninstall = { viewModel.uninstallApp(it) }
                 )
             }
 
@@ -445,6 +484,25 @@ fun MainLauncherScreen(
                 )
             }
 
+            if (showAppVisibilityManager) {
+                AppVisibilityDialog(
+                    allApps = allApps,
+                    onToggleVisibility = { viewModel.toggleAppHidden(it) },
+                    onDismiss = { viewModel.showAppVisibilityManager.value = false }
+                )
+            }
+
+            if (showFolderManager) {
+                FolderManagerDialog(
+                    allApps = allApps,
+                    existingCategories = categoryList,
+                    onMoveAppToCategory = { app, newCategory ->
+                        viewModel.setAppCategory(app, newCategory)
+                    },
+                    onDismiss = { viewModel.showFolderManager.value = false }
+                )
+            }
+
             if (showVaultUnlockModal) {
                 HiddenVaultDialog(
                     onDismiss = { viewModel.showVaultUnlockModal.value = false },
@@ -463,7 +521,9 @@ fun MainLauncherScreen(
                     onResetAllBanners = { viewModel.resetAllBannersAndMetadata() },
                     onToggleVaultUnlock = { viewModel.isVaultUnlocked.value = !isVaultUnlocked },
                     onClearCache = { viewModel.clearImageCache() },
-                    onOpenHelp = { viewModel.showHelpOverlay.value = true }
+                    onOpenHelp = { viewModel.showHelpOverlay.value = true },
+                    onOpenAppVisibilityManager = { viewModel.showAppVisibilityManager.value = true },
+                    onOpenFolderManager = { viewModel.showFolderManager.value = true }
                 )
             }
 
@@ -497,9 +557,9 @@ fun MainLauncherScreen(
             if (showSharePrompt) {
                 SuggestionDialog(
                     icon = Icons.Default.Share,
-                    title = "Enjoying Aura TV?",
-                    description = "Help your friends and family discover a clean, lightning-fast TV launcher experience by sharing Aura TV!",
-                    primaryButtonText = "Share Aura TV",
+                    title = stringResource(R.string.share_title),
+                    description = stringResource(R.string.share_desc),
+                    primaryButtonText = stringResource(R.string.share_action),
                     onPrimary = { viewModel.shareApp() },
                     onDismiss = { viewModel.dismissSharePrompt() }
                 )
@@ -508,9 +568,9 @@ fun MainLauncherScreen(
             if (showRatePrompt) {
                 SuggestionDialog(
                     icon = Icons.Default.Star,
-                    title = "Rate Aura TV",
-                    description = "If you enjoy using Aura TV, taking a moment to rate us on the Play Store helps us a lot!",
-                    primaryButtonText = "Rate Now",
+                    title = stringResource(R.string.rate_title),
+                    description = stringResource(R.string.rate_desc),
+                    primaryButtonText = stringResource(R.string.rate_action),
                     onPrimary = { viewModel.rateApp() },
                     onDismiss = { viewModel.dismissRatePrompt() }
                 )
@@ -539,10 +599,27 @@ private fun CategoryFilterRow(
             val iconVector = when (catName) {
                 "All" -> Icons.Default.Apps
                 "Favorites" -> Icons.Default.Star
+                "Games" -> Icons.Default.SportsEsports
+                "Media" -> Icons.Default.PermMedia
+                "Tools" -> Icons.Default.Build
                 "TV Apps" -> Icons.Default.Tv
                 "Sideloaded" -> Icons.Default.Android
                 "Streaming" -> Icons.Default.PlayArrow
+                "System" -> Icons.Default.Settings
                 else -> Icons.Default.Folder
+            }
+
+            val localizedTitle = when (catName) {
+                "All" -> stringResource(R.string.category_all)
+                "Favorites" -> stringResource(R.string.category_favorites)
+                "Games" -> stringResource(R.string.category_games)
+                "Media" -> stringResource(R.string.category_media)
+                "Tools" -> stringResource(R.string.category_tools)
+                "TV Apps" -> stringResource(R.string.category_tv_apps)
+                "Sideloaded" -> stringResource(R.string.category_sideloaded)
+                "Streaming" -> stringResource(R.string.category_streaming)
+                "System" -> stringResource(R.string.category_system)
+                else -> catName
             }
 
             Box(
@@ -558,6 +635,14 @@ private fun CategoryFilterRow(
                     .onFocusChanged { isFocused = it.isFocused }
                     .focusable()
                     .clickable { onSelectCategory(catName) }
+                    .onKeyEvent { keyEvent ->
+                        if (keyEvent.key == Key.DirectionCenter || keyEvent.key == Key.Enter || keyEvent.key == Key.NumPadEnter) {
+                            onSelectCategory(catName)
+                            true
+                        } else {
+                            false
+                        }
+                    }
                     .padding(horizontal = 14.dp, vertical = 7.dp)
                     .testTag("category_chip_$catName"),
                 contentAlignment = Alignment.Center
@@ -565,14 +650,14 @@ private fun CategoryFilterRow(
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
                         imageVector = iconVector,
-                        contentDescription = catName,
+                        contentDescription = localizedTitle,
                         tint = if (isFocused || isSelected) Color.Black else (if (catName == "Favorites") Color(0xFFF59E0B) else Color.White.copy(alpha = 0.9f)),
                         modifier = Modifier.size(15.dp)
                     )
                     Spacer(modifier = Modifier.width(6.dp))
 
                     Text(
-                        text = catName,
+                        text = localizedTitle,
                         color = if (isFocused || isSelected) Color.Black else Color.White,
                         fontWeight = if (isSelected || isFocused) FontWeight.Bold else FontWeight.Medium,
                         fontSize = 13.sp
@@ -615,10 +700,10 @@ private fun RemoteControlShortcutsBar() {
             horizontalArrangement = Arrangement.spacedBy(16.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            ShortcutHintPill(keyLabel = "OK", actionText = "Launch")
-            ShortcutHintPill(keyLabel = "HOLD OK / MENU", actionText = "Options")
-            ShortcutHintPill(keyLabel = "0-9", actionText = "Hotkey")
-            ShortcutHintPill(keyLabel = "MIC", actionText = "Voice")
+            ShortcutHintPill(keyLabel = "OK", actionText = stringResource(R.string.shortcut_launch))
+            ShortcutHintPill(keyLabel = "HOLD OK / MENU", actionText = stringResource(R.string.shortcut_options))
+            ShortcutHintPill(keyLabel = "0-9", actionText = stringResource(R.string.shortcut_hotkey))
+            ShortcutHintPill(keyLabel = "MIC", actionText = stringResource(R.string.shortcut_voice))
         }
 
         Row(
@@ -689,7 +774,7 @@ private fun EmptyStateView(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = if (searchQuery.isNotBlank()) "No apps found matching \"$searchQuery\"" else "No applications in \"$selectedCategory\"",
+                text = if (searchQuery.isNotBlank()) stringResource(R.string.empty_matching, searchQuery) else stringResource(R.string.empty_category, selectedCategory),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White,
                 fontWeight = FontWeight.Bold
@@ -698,7 +783,7 @@ private fun EmptyStateView(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = if (!isVaultUnlocked) "Tip: Some apps may be hidden in the Stealth Vault." else "Try selecting another category folder or clear search.",
+                text = if (!isVaultUnlocked) stringResource(R.string.empty_tip_vault) else stringResource(R.string.empty_tip_category),
                 style = MaterialTheme.typography.bodySmall,
                 color = Color.White.copy(alpha = 0.6f)
             )
@@ -796,7 +881,7 @@ private fun OledScreensaverOverlay(
             Spacer(modifier = Modifier.height(8.dp))
 
             Text(
-                text = "OLED Ambient Saver — Press any button to resume",
+                text = stringResource(R.string.screensaver_resume_hint),
                 color = Color.White.copy(alpha = 0.3f),
                 fontSize = 12.sp,
                 fontWeight = FontWeight.Normal

@@ -4,6 +4,7 @@ import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
 import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.LinearEasing
 import androidx.compose.animation.core.RepeatMode
 import androidx.compose.animation.core.animateFloat
@@ -106,13 +107,19 @@ fun Modifier.dpadFocusEffect(
         label = "dpadGlowColor"
     )
 
+    val animatedElevation by animateDpAsState(
+        targetValue = if (isFocused) elevation else 0.dp,
+        animationSpec = spring(dampingRatio = 0.75f, stiffness = 350f),
+        label = "dpadFocusElevation"
+    )
+
     this
         .scale(scale)
         .shadow(
-            elevation = if (isFocused) elevation else 2.dp,
+            elevation = animatedElevation,
             shape = shape,
-            ambientColor = if (isFocused) activeGlowColor else Color.Black,
-            spotColor = if (isFocused) activeGlowColor else Color.Black
+            ambientColor = if (isFocused) activeGlowColor.copy(alpha = 0.6f) else Color.Transparent,
+            spotColor = if (isFocused) activeGlowColor.copy(alpha = 0.8f) else Color.Transparent
         )
         .border(
             width = if (isFocused) borderWidth else 1.dp,

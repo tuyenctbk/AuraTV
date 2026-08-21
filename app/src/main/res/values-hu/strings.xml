@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aura TV</string>
+    <string name="search_hint">-
+Alkalmazások keresése...</string>
+    <string name="category_all">-
+Minden alkalmazás</string>
+    <string name="category_favorites">-
+Kedvencek</string>
+    <string name="category_tv_apps">-
+TV-alkalmazások</string>
+    <string name="category_sideloaded">-
+Oldalra töltve</string>
+    <string name="category_games">-
+Játékok</string>
+    <string name="category_streaming">-
+Streaming</string>
+    <string name="category_work">-
+Munka</string>
+    <string name="category_system">-
+Rendszer</string>
+    <string name="settings_title">-
+Indító beállításai</string>
+    <string name="grid_columns">-
+Rács oszlopok</string>
+    <string name="show_app_labels">-
+Alkalmazáscímkék megjelenítése</string>
+    <string name="card_aspect_ratio">-
+Kártya képaránya</string>
+    <string name="wallpaper_theme">-
+Háttérkép és téma</string>
+    <string name="dim_level">-
+Háttérkép Dim</string>
+    <string name="oled_protection">-
+OLED beégés elleni védelem</string>
+    <string name="show_storage_widget">-
+Tároló widget</string>
+    <string name="show_clock_widget">-
+Óra és dátum Widget</string>
+    <string name="reduce_motion">-
+Mozgás/animációk csökkentése</string>
+    <string name="palette_glow">-
+Dinamikus paletta ragyogás</string>
+    <string name="accent_color">-
+Egyedi kiemelő szín</string>
+    <string name="launch_app">-
+Indítsa el az alkalmazást</string>
+    <string name="add_to_favorites">-
+Hozzáadás a kedvencekhez</string>
+    <string name="remove_from_favorites">-
+Eltávolítás a Kedvencek közül</string>
+    <string name="deep_stop">Kényszer leállítás (mély megállás)</string>
+    <string name="deep_stop_desc">-
+Nyissa meg a rendszeralkalmazás-információkat a háttérmemória-felhasználás leállításához</string>
+    <string name="banner_fixer">-
+Banner rögzítő</string>
+    <string name="banner_fixer_desc">-
+Rendeljen nagy felbontású egyéni szalaghirdetés elérési utat vagy kép URL-jét</string>
+    <string name="map_hotkey">-
+Térkép távoli gyorsbillentyűje (0-9)</string>
+    <string name="map_hotkey_desc">-
+Rendelje hozzá a gyorsindító távoli számbillentyűjét</string>
+    <string name="change_category">-
+Kategória / dinamikus mappa módosítása</string>
+    <string name="hide_app">-
+Alkalmazás elrejtése (Stealth Vault)</string>
+    <string name="unhide_app">-
+Alkalmazás elrejtésének felfedése</string>
+    <string name="cancel">-
+Mégsem</string>
+    <string name="save">-
+Mentés</string>
+    <string name="unlock">-
+Oldja fel</string>
+    <string name="got_it">-
+Értem, Útmutató bezárása</string>
+    <string name="close">-
+Bezárás</string>
+    <string name="back">-
+Vissza</string>
+    <string name="next">-
+Következő</string>
+    <string name="get_started">-
+Kezdje el</string>
+    <string name="clear">-
+Világos</string>
+    <string name="reset">-
+Reset Banner</string>
+    <string name="clear_hotkey">-
+Gyorsbillentyű törlése</string>
+    <string name="backup_export">-
+Biztonsági mentés konfigurációja (JSON)</string>
+    <string name="backup_import">-
+Konfiguráció visszaállítása (JSON)</string>
+    <string name="clear_cache">-
+Törölje az Indító gyorsítótárát</string>
+    <string name="storage_used">-
+Tárolás használt</string>
+    <string name="free_space">-
+Ingyenes</string>
+    <string name="voice_search_prompt">Beszéljen a keresési alkalmazásokhoz...</string>
+    <string name="no_apps_found">-
+Nem találhatók alkalmazások</string>
+    <string name="remote_guide">-
+TV távirányító útmutató</string>
+    <string name="help_dpad_title">-
+D-Pad nyilak (fel / le / balra / jobbra)</string>
+    <string name="help_dpad_desc">-
+Navigáljon az alkalmazásikonok rácsában, a felső fejlécsávban, a keresősávban és az egyéni kategória mappákban.</string>
+    <string name="help_long_press_title">-
+Hosszan nyomja meg az OK / Select gombot</string>
+    <string name="help_long_press_desc">-
+Megnyitja az Alkalmazás helyi menüjét a Deep Stop aktiválásához, egyéni gyorsbillentyűk beállításához vagy egyéni szalaghirdetések szerkesztéséhez.</string>
+    <string name="help_settings_title">-
+Menü gomb / Beállítások ikon</string>
+    <string name="help_settings_desc">-
+Megnyitja az Indítóbeállításokat (4K háttérkép motor, egyéni kiemelő színek, teljesítmény gyorsítótár-tisztító).</string>
+    <string name="help_hotkey_title">-
+Számbillentyűk (0-9)</string>
+    <string name="help_hotkey_desc">-
+Azonnal elindítja a feltérképezett gyorsbillentyű-alkalmazásokat az indító bármely pontjáról.</string>
+    <string name="help_vault_title">-
+Stealth Vault kombó</string>
+    <string name="help_vault_desc">-
+Nyomja meg a D-Pad kombinációt: FEL, FEL, LE, BAL a rejtett trezoralkalmazások feloldásához vagy zárolásához.</string>
+    <string name="help_mic_title">-
+Mikrofon/Asszisztens gomb</string>
+    <string name="help_mic_desc">-
+Beindítja a hang-szöveg keresési figyelőt a támogatott Android TV távirányítókon.</string>
+    <string name="vault_title">-
+Stealth Vault Unlock</string>
+    <string name="vault_desc">-
+Írja be a kódot (alapértelmezett: GHOST), vagy nyomja meg a D-Pad sorrendjét FEL, FEL, LE, BALRA a kezdőképernyőn.</string>
+    <string name="vault_invalid_passcode">-
+Érvénytelen jelszó</string>
+    <string name="transparency_title">-
+App Discovery Transparency</string>
+    <string name="transparency_desc">-
+Az Aura TV engedélyt kér a telepített alkalmazások (QUERY_ALL_PACKAGES) átvizsgálásához. Erre azért van szükség, hogy a natív tévéalkalmazásokat és az oldalról letöltött mobilalkalmazásokat is automatikusan észlelje és megjelenítse az eszközén.
+
+Az Aura TV 100%-ban nyílt forráskódú, reklámmentes, és tiszteletben tartja az Ön magánéletét. Soha nem gyűjtenek vagy továbbítanak személyes adatokat vagy alkalmazáslistát.</string>
+    <string name="transparency_accept">-
+Értem &amp; Elfogadom</string>
+    <string name="onboarding_welcome_title">-
+Üdvözöljük az Aura TV-n</string>
+    <string name="onboarding_welcome_desc">-
+Villámgyors, minimalista Android TV-indító, amelyet a könnyű navigációhoz, a mélyreható testreszabáshoz és a tiszta esztétikához terveztek.</string>
+    <string name="onboarding_cats_title">-
+Intelligens alkalmazás kategóriák</string>
+    <string name="onboarding_cats_desc">-
+Rendezze streamelési alkalmazásait, játékait és oldalról betöltött segédprogramjait egyedi sorfejlécekbe, élő alkalmazásszámlálással.</string>
+    <string name="onboarding_oled_title">OLED beégés elleni védelem</string>
+    <string name="onboarding_oled_desc">-
+Védje TV-képernyőjét konfigurálható inaktivitási időzítőkkel, amelyek automatikusan aktiválják az OLED-biztos környezeti fekete képernyőt.</string>
+    <string name="hotkey_dialog_title">-
+Térkép gyorsbillentyű: %1$s</string>
+    <string name="hotkey_dialog_desc">-
+Nyomja meg a távoli számgombot (0-9) az indítón az alkalmazás azonnali elindításához.</string>
+    <string name="category_dialog_title">-
+Dinamikus kategória: %1$s</string>
+    <string name="category_dialog_desc">-
+Válasszon ki egy meglévő kategória mappát, vagy írjon be egy újat.</string>
+    <string name="create_category_hint">-
+Új mappanév létrehozása...</string>
+    <string name="banner_dialog_title">-
+Szalaghirdetés rögzítő: %1$s</string>
+    <string name="banner_dialog_desc">-
+Adja meg a helyi fájl elérési útját vagy a kép URL-jét az egyéni 16:9-es szalaghirdetéshez.
+Tipp: Mentse a képeket a /sdcard/GhostLauncher/Banners/%1$s.png mappába az automatikus észleléshez.</string>
+    <string name="wallpaper_gradient">-
+Cyber Obszidián Gradiens</string>
+    <string name="wallpaper_custom">-
+Egyedi helyi / galéria háttérkép</string>
+    <string name="wallpaper_solid">-
+Minimális tiszta OLED fekete</string>
+    <string name="toast_backup_saved">-
+A biztonsági másolat JSON a vágólapra másolva és elmentve</string>
+    <string name="toast_backup_restored">-
+A biztonsági mentés sikeresen visszaállítva</string>
+    <string name="toast_cache_cleared">-
+Az indítókép-gyorsítótár sikeresen törölve</string>
+    <string name="toast_hotkey_set">-
+Gyorsbillentyű hozzárendelve ehhez: [%1$d]</string>
+    <string name="toast_hotkey_cleared">-
+Gyorsbillentyű törölve</string>
+    <string name="stealth_vault_unlocked">-
+Stealth Vault feloldva</string>
+    <string name="stealth_vault_locked">-
+Stealth Vault Locked</string>
+    <string name="maybe_later">-
+Talán később</string>
+    <string name="share_title">-
+Élvezed az Aura TV-t?</string>
+    <string name="share_desc">-
+Segítsen barátainak és családtagjainak felfedezni a tiszta, villámgyors TV-indító élményt az Aura TV megosztásával!</string>
+    <string name="share_action">-
+Oszd meg az Aura TV-t</string>
+    <string name="rate_title">-
+Értékelje az Aura TV-t</string>
+    <string name="rate_desc">-
+Ha szereti használni az Aura TV-t, szánjon egy percet arra, hogy értékeljen minket a Play Áruházban, az sokat segít nekünk!</string>
+    <string name="rate_action">Értékelje most</string>
+    <string name="shortcut_launch">-
+Indítsa el</string>
+    <string name="shortcut_options">-
+Opciók</string>
+    <string name="shortcut_hotkey">-
+Gyorsbillentyű</string>
+    <string name="shortcut_voice">-
+Hang</string>
+    <string name="empty_matching">-
+Nem található a \\"%1$s\\" kifejezésnek megfelelő alkalmazás</string>
+    <string name="empty_category">-
+Nincsenek alkalmazások itt: \\"%1$s\\"</string>
+    <string name="empty_tip_vault">-
+Tipp: Előfordulhat, hogy egyes alkalmazások el vannak rejtve a Stealth Vaultban.</string>
+    <string name="empty_tip_category">-
+Próbáljon másik kategóriamappát kiválasztani, vagy törölje a keresést.</string>
+    <string name="screensaver_resume_hint">-
+OLED Ambient Saver — Nyomja meg bármelyik gombot a folytatáshoz</string>
+    <string name="screensaver_label">-
+Az OLED képernyővédő inaktivitási időtúllépése</string>
+    <string name="screensaver_desc">-
+Inaktivitás után OLED-biztos környezeti fekete képernyőt vált ki, hogy megakadályozza a kijelző beégését.</string>
+    <string name="preset_dark_cyber">-
+Dark Cyber</string>
+    <string name="preset_neon_aurora">-
+Aurora</string>
+    <string name="preset_cyber_grid">-
+Deep Slate</string>
+</resources>

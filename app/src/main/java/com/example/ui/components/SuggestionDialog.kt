@@ -35,10 +35,12 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.R
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
 import com.example.ui.theme.TvSurfaceVariant
@@ -125,7 +127,7 @@ fun SuggestionDialog(
                         .onFocusChanged { isDismissFocused = it.isFocused }
                 ) {
                     Text(
-                        text = "Maybe Later",
+                        text = stringResource(R.string.maybe_later),
                         color = if (isDismissFocused) Color.Black else Color.White,
                         fontWeight = FontWeight.Bold
                     )

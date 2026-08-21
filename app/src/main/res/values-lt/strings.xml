@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Aura TV</string>
+    <string name="search_hint">-
+Ieškoti programų...</string>
+    <string name="category_all">-
+Visos programos</string>
+    <string name="category_favorites">-
+Mėgstamiausi</string>
+    <string name="category_tv_apps">-
+TV programos</string>
+    <string name="category_sideloaded">-
+Pakrauta iš šono</string>
+    <string name="category_games">-
+Žaidimai</string>
+    <string name="category_streaming">-
+Srautinis perdavimas</string>
+    <string name="category_work">-
+Darbas</string>
+    <string name="category_system">-
+Sistema</string>
+    <string name="settings_title">-
+Paleidimo priemonės nustatymai</string>
+    <string name="grid_columns">-
+Tinklelio stulpeliai</string>
+    <string name="show_app_labels">-
+Rodyti programų etiketes</string>
+    <string name="card_aspect_ratio">-
+Kortelės kraštinių santykis</string>
+    <string name="wallpaper_theme">-
+Ekrano užsklanda ir tema</string>
+    <string name="dim_level">-
+Tapetai Dim</string>
+    <string name="oled_protection">-
+OLED apsauga nuo įsidegimo</string>
+    <string name="show_storage_widget">-
+Saugojimo valdiklis</string>
+    <string name="show_clock_widget">-
+Laikrodžio ir datos valdiklis</string>
+    <string name="reduce_motion">-
+Sumažinti judesį / animacijas</string>
+    <string name="palette_glow">-
+Dinaminis paletės švytėjimas</string>
+    <string name="accent_color">-
+Pasirinktinė akcento spalva</string>
+    <string name="launch_app">-
+Paleiskite programą</string>
+    <string name="add_to_favorites">-
+Pridėti prie mėgstamiausių</string>
+    <string name="remove_from_favorites">-
+Pašalinti iš parankinių</string>
+    <string name="deep_stop">Priverstinis sustabdymas (gilus sustojimas)</string>
+    <string name="deep_stop_desc">-
+Atidarykite sistemos programos informaciją, kad sustabdytumėte foninės atminties naudojimą</string>
+    <string name="banner_fixer">-
+Reklamjuosčių fiksatorius</string>
+    <string name="banner_fixer_desc">-
+Priskirkite didelės raiškos tinkintą reklamjuostės kelią arba vaizdo URL</string>
+    <string name="map_hotkey">-
+Žemėlapio nuotolinio valdymo spartusis klavišas (0-9)</string>
+    <string name="map_hotkey_desc">-
+Priskirkite greitosios paleidimo priemonės nuotolinio numerio klavišą</string>
+    <string name="change_category">-
+Keisti kategoriją / dinaminį aplanką</string>
+    <string name="hide_app">-
+Slėpti programą („Stealth Vault“)</string>
+    <string name="unhide_app">-
+Rodyti programą</string>
+    <string name="cancel">-
+Atšaukti</string>
+    <string name="save">-
+Išsaugoti</string>
+    <string name="unlock">-
+Atrakinti</string>
+    <string name="got_it">-
+Supratau, uždaryti vadovą</string>
+    <string name="close">-
+Uždaryti</string>
+    <string name="back">-
+Atgal</string>
+    <string name="next">-
+Kitas</string>
+    <string name="get_started">-
+Pradėkite</string>
+    <string name="clear">-
+Aišku</string>
+    <string name="reset">-
+Iš naujo nustatyti reklamjuostę</string>
+    <string name="clear_hotkey">-
+Išvalyti spartųjį klavišą</string>
+    <string name="backup_export">-
+Atsarginė konfigūracija (JSON)</string>
+    <string name="backup_import">-
+Atkurti konfigūraciją (JSON)</string>
+    <string name="clear_cache">-
+Išvalykite paleidimo priemonės talpyklą</string>
+    <string name="storage_used">-
+Naudota saugykla</string>
+    <string name="free_space">-
+Nemokama</string>
+    <string name="voice_search_prompt">Kalbėkite su paieškos programomis...</string>
+    <string name="no_apps_found">-
+Programų nerasta</string>
+    <string name="remote_guide">-
+TV nuotolinio valdymo pulto vadovas</string>
+    <string name="help_dpad_title">-
+D-pad rodyklės (aukštyn / žemyn / kairėn / dešinėn)</string>
+    <string name="help_dpad_desc">-
+Naršykite programų piktogramų tinklelį, viršutinę antraštės juostą, paieškos juostą ir tinkintų kategorijų aplankus.</string>
+    <string name="help_long_press_title">-
+Ilgai paspauskite OK / Pasirinkite</string>
+    <string name="help_long_press_desc">-
+Atidaromas programos kontekstinis meniu, kad suaktyvintumėte giluminį sustabdymą, nustatytumėte pasirinktinius sparčiuosius klavišus arba redaguotų pasirinktines reklamjuostes.</string>
+    <string name="help_settings_title">-
+Meniu mygtukas / nustatymų piktograma</string>
+    <string name="help_settings_desc">-
+Atidaromi paleidimo priemonės nustatymai (4K fono paveikslėlis, tinkintos akcento spalvos, našumo talpyklos valiklis).</string>
+    <string name="help_hotkey_title">-
+Skaičių klavišai (0–9)</string>
+    <string name="help_hotkey_desc">-
+Iš bet kurios paleidimo priemonės vietos akimirksniu paleidžiamos susietos sparčiųjų klavišų programos.</string>
+    <string name="help_vault_title">-
+„Stealth Vault“ derinys</string>
+    <string name="help_vault_desc">-
+Norėdami atrakinti arba užrakinti paslėptas saugyklos programas, paspauskite D-Pad kombinaciją: AUKŠTYN, AUKŠTYN, ŽEMYN, KAIRĖN.</string>
+    <string name="help_mic_title">-
+Mikrofono / asistento mygtukas</string>
+    <string name="help_mic_desc">-
+Suaktyvina paieškos balsu į tekstą klausytoją palaikomuose „Android TV“ nuotolinio valdymo pultuose.</string>
+    <string name="vault_title">-
+Stealth Vault atrakinimas</string>
+    <string name="vault_desc">-
+Įveskite kodą (numatytasis: GHOST) arba pagrindiniame ekrane paspauskite D-Pad seka UP, UP, DOWN, LEFT.</string>
+    <string name="vault_invalid_passcode">-
+Neteisingas slaptažodis</string>
+    <string name="transparency_title">-
+Programos atradimo skaidrumas</string>
+    <string name="transparency_desc">-
+„Aura TV“ reikalingas leidimas nuskaityti įdiegtas programas (QUERY_ALL_PACKAGES). Tai būtina norint automatiškai aptikti ir rodyti tiek vietines TV programas, tiek į šoną įkeltas programas mobiliesiems įrenginyje.
+
+Aura TV yra 100 % atvirojo kodo, be skelbimų ir gerbia jūsų privatumą. Niekada nerenkami ir nepersiunčiami jokie asmens duomenys ar programų sąrašas.</string>
+    <string name="transparency_accept">-
+Suprantu ir Priimu</string>
+    <string name="onboarding_welcome_title">-
+Sveiki atvykę į Aura TV</string>
+    <string name="onboarding_welcome_desc">-
+Žaibiška, minimalistinė „Android TV“ paleidimo priemonė, sukurta lengvam naršymui, išsamiam tinkinimui ir švariai estetikai.</string>
+    <string name="onboarding_cats_title">-
+Išmaniųjų programų kategorijos</string>
+    <string name="onboarding_cats_desc">-
+Tvarkingai sutvarkykite srautinio perdavimo programas, žaidimus ir įkeltas programas į tinkintas eilučių skilčių antraštes su tiesioginiu programų skaičiumi.</string>
+    <string name="onboarding_oled_title">OLED apsauga nuo įsidegimo</string>
+    <string name="onboarding_oled_desc">-
+Apsaugokite savo televizoriaus ekraną su konfigūruojamais neveiklumo laikmačiais, kurie automatiškai įjungia OLED saugų aplinkos juodą ekraną.</string>
+    <string name="hotkey_dialog_title">-
+Žemėlapio spartusis klavišas: %1$s</string>
+    <string name="hotkey_dialog_desc">-
+Paleidimo priemonėje paspauskite nuotolinį skaičių klavišą (0–9), kad iš karto paleistumėte šią programą.</string>
+    <string name="category_dialog_title">-
+Dinaminė kategorija: %1$s</string>
+    <string name="category_dialog_desc">-
+Pasirinkite esamą kategorijos aplanką arba įveskite naują.</string>
+    <string name="create_category_hint">-
+Sukurti naują aplanko pavadinimą...</string>
+    <string name="banner_dialog_title">-
+Reklamjuosčių fiksatorius: %1$s</string>
+    <string name="banner_dialog_desc">-
+Įveskite vietinio failo kelią arba vaizdo URL, skirtą pasirinktinei 16:9 reklamjuostei.
+Patarimas: išsaugokite vaizdus į /sdcard/GhostLauncher/Banners/%1$s.png, kad būtų galima automatiškai aptikti.</string>
+    <string name="wallpaper_gradient">-
+Kibernetinis obsidiano gradientas</string>
+    <string name="wallpaper_custom">-
+Pasirinktinis vietinis / galerijos fonas</string>
+    <string name="wallpaper_solid">-
+Minimalus grynas OLED juodas</string>
+    <string name="toast_backup_saved">-
+Atsarginė JSON kopija nukopijuota į mainų sritį ir išsaugota</string>
+    <string name="toast_backup_restored">-
+Atsarginė kopija sėkmingai atkurta</string>
+    <string name="toast_cache_cleared">-
+Paleidimo priemonės vaizdo talpykla sėkmingai išvalyta</string>
+    <string name="toast_hotkey_set">-
+Spartusis klavišas susietas su [%1$d]</string>
+    <string name="toast_hotkey_cleared">-
+Spartusis klavišas išvalytas</string>
+    <string name="stealth_vault_unlocked">-
+Stealth Vault atrakintas</string>
+    <string name="stealth_vault_locked">-
+„Stealth Vault“ užrakinta</string>
+    <string name="maybe_later">-
+Gal vėliau</string>
+    <string name="share_title">-
+Mėgaukitės „Aura TV“?</string>
+    <string name="share_desc">-
+Padėkite savo draugams ir šeimos nariams atrasti švarią, žaibišką TV paleidimo patirtį, dalindamiesi Aura TV!</string>
+    <string name="share_action">-
+Dalinkitės Aura TV</string>
+    <string name="rate_title">-
+Įvertinkite Aura TV</string>
+    <string name="rate_desc">-
+Jei jums patinka naudotis „Aura TV“, skirkite šiek tiek laiko ir įvertinkite mus „Play“ parduotuvėje, tai mums labai padės!</string>
+    <string name="rate_action">Įvertink dabar</string>
+    <string name="shortcut_launch">-
+Paleisti</string>
+    <string name="shortcut_options">-
+Parinktys</string>
+    <string name="shortcut_hotkey">-
+Spartusis klavišas</string>
+    <string name="shortcut_voice">-
+Balsas</string>
+    <string name="empty_matching">-
+Nerasta programų, atitinkančių \\"%1$s\\"</string>
+    <string name="empty_category">-
+Nėra programų \\"%1$s\\"</string>
+    <string name="empty_tip_vault">-
+Patarimas: kai kurios programos gali būti paslėptos Stealth Vault.</string>
+    <string name="empty_tip_category">-
+Pabandykite pasirinkti kitos kategorijos aplanką arba išvalyti paiešką.</string>
+    <string name="screensaver_resume_hint">-
+OLED Ambient Saver – paspauskite bet kurį mygtuką, kad tęstumėte</string>
+    <string name="screensaver_label">-
+OLED ekrano užsklandos neveiklumo laikas</string>
+    <string name="screensaver_desc">-
+Po neveiklumo suaktyvina OLED saugų aplinkos juodą ekraną, kad būtų išvengta ekrano perdegimo.</string>
+    <string name="preset_dark_cyber">-
+Tamsus kibernetinis</string>
+    <string name="preset_neon_aurora">-
+Aurora</string>
+    <string name="preset_cyber_grid">-
+Gilus skalūnas</string>
+</resources>

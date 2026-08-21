@@ -35,6 +35,9 @@ interface AppDao {
     @Query("UPDATE app_entity SET fastLaunchKey = NULL WHERE fastLaunchKey = :key")
     suspend fun clearFastLaunchKey(key: Int)
 
+    @Query("UPDATE app_entity SET launchCount = launchCount + 1, lastLaunchedTime = :timestamp WHERE packageName = :packageName")
+    suspend fun incrementLaunchStats(packageName: String, timestamp: Long)
+
     @Query("DELETE FROM app_entity WHERE packageName = :packageName")
     suspend fun delete(packageName: String)
 

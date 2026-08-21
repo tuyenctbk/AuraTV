@@ -11,7 +11,11 @@ data class AppEntity(
     val category: String? = null,
     val isHidden: Boolean = false,
     val fastLaunchKey: Int? = null,
-    val displayOrder: Int = 0
+    val displayOrder: Int = 0,
+    val launchCount: Int = 0,
+    val lastLaunchedTime: Long = 0L,
+    val installedTime: Long = 0L
 )
 
 typealias AppMetadataEntity = AppEntity
+

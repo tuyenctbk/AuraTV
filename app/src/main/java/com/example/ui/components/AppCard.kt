@@ -281,7 +281,8 @@ private fun FallbackCardContent(app: AppItem) {
             .background(
                 brush = Brush.radialGradient(
                     colors = listOf(
-                        TvSurfaceVariant.copy(alpha = 0.9f),
+                        Color(0xFF1E1B4B).copy(alpha = 0.75f),
+                        Color(0xFF0F172A).copy(alpha = 0.95f),
                         Color(0xFF030712)
                     )
                 )
@@ -291,9 +292,9 @@ private fun FallbackCardContent(app: AppItem) {
         Canvas(modifier = Modifier.fillMaxSize()) {
             val w = size.width
             val h = size.height
-            val gridColor = Color.White.copy(alpha = 0.035f)
-            val spacing = 24.dp.toPx()
-            
+            val gridColor = Color.White.copy(alpha = 0.03f)
+            val spacing = 20.dp.toPx()
+
             var x = 0f
             while (x < w) {
                 drawLine(gridColor, Offset(x, 0f), Offset(x, h), strokeWidth = 1f)
@@ -304,15 +305,21 @@ private fun FallbackCardContent(app: AppItem) {
                 drawLine(gridColor, Offset(0f, y), Offset(w, y), strokeWidth = 1f)
                 y += spacing
             }
-            
-            // Outer corner bracket decors
-            val accentColor = Color.White.copy(alpha = 0.15f)
-            val len = 8.dp.toPx()
-            val offset = 4.dp.toPx()
-            
+
+            // Outer corner cybernetic brackets
+            val accentColor = Color(0xFF818CF8).copy(alpha = 0.35f)
+            val len = 10.dp.toPx()
+            val offset = 6.dp.toPx()
+
             // Top-left
             drawLine(accentColor, Offset(offset, offset), Offset(offset + len, offset), strokeWidth = 1.5f)
             drawLine(accentColor, Offset(offset, offset), Offset(offset, offset + len), strokeWidth = 1.5f)
+            // Top-right
+            drawLine(accentColor, Offset(w - offset, offset), Offset(w - offset - len, offset), strokeWidth = 1.5f)
+            drawLine(accentColor, Offset(w - offset, offset), Offset(w - offset, offset + len), strokeWidth = 1.5f)
+            // Bottom-left
+            drawLine(accentColor, Offset(offset, h - offset), Offset(offset + len, h - offset), strokeWidth = 1.5f)
+            drawLine(accentColor, Offset(offset, h - offset), Offset(offset, h - offset - len), strokeWidth = 1.5f)
             // Bottom-right
             drawLine(accentColor, Offset(w - offset, h - offset), Offset(w - offset - len, h - offset), strokeWidth = 1.5f)
             drawLine(accentColor, Offset(w - offset, h - offset), Offset(w - offset, h - offset - len), strokeWidth = 1.5f)
@@ -320,28 +327,48 @@ private fun FallbackCardContent(app: AppItem) {
 
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = androidx.compose.foundation.layout.Arrangement.Center,
             modifier = Modifier.padding(8.dp)
         ) {
-            if (bitmap != null) {
-                Image(
-                    bitmap = bitmap,
-                    contentDescription = app.label,
-                    modifier = Modifier.size(48.dp)
-                )
-            } else {
-                Icon(
-                    imageVector = if (app.appType == AppType.LEANBACK) Icons.Default.Tv else Icons.Default.Android,
-                    contentDescription = app.label,
-                    tint = TvFocusGlow,
-                    modifier = Modifier.size(40.dp)
-                )
+            // Frosted glass pod for icon
+            Box(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(14.dp))
+                    .background(
+                        brush = Brush.verticalGradient(
+                            colors = listOf(
+                                Color.White.copy(alpha = 0.12f),
+                                Color.White.copy(alpha = 0.04f)
+                            )
+                        )
+                    )
+                    .padding(8.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                if (bitmap != null) {
+                    Image(
+                        bitmap = bitmap,
+                        contentDescription = app.label,
+                        modifier = Modifier.size(46.dp)
+                    )
+                } else {
+                    Icon(
+                        imageVector = if (app.appType == AppType.LEANBACK) Icons.Default.Tv else Icons.Default.Android,
+                        contentDescription = app.label,
+                        tint = TvFocusGlow,
+                        modifier = Modifier.size(40.dp)
+                    )
+                }
             }
- 
-            Spacer(modifier = Modifier.height(4.dp))
+
+            Spacer(modifier = Modifier.height(6.dp))
             Text(
                 text = app.label,
-                style = MaterialTheme.typography.labelSmall,
-                color = Color.White.copy(alpha = 0.9f),
+                style = MaterialTheme.typography.labelSmall.copy(
+                    fontWeight = FontWeight.SemiBold,
+                    fontSize = 11.sp
+                ),
+                color = Color.White.copy(alpha = 0.95f),
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis
             )

@@ -147,7 +147,8 @@ class LauncherRepository(
 
         val ownPackageName = context.packageName
 
-        val autoFolderBanners = File(Environment.getExternalStorageDirectory(), "GhostLauncher/Banners")
+        val autoFolderBannersAura = File(Environment.getExternalStorageDirectory(), "AuraTV/Banners")
+        val autoFolderBannersLegacy = File(Environment.getExternalStorageDirectory(), "GhostLauncher/Banners")
 
         val items = mutableListOf<AppItem>()
         val processedPackages = mutableSetOf<String>()
@@ -157,7 +158,7 @@ class LauncherRepository(
 
         for (resolveInfo in allActivities) {
             val pkgName = resolveInfo.activityInfo.packageName
-            if (pkgName == ownPackageName) continue // Don't show GhostLauncher inside GhostLauncher
+            if (pkgName == ownPackageName) continue // Don't show launcher inside launcher
             if (processedPackages.contains(pkgName)) continue
             processedPackages.add(pkgName)
 
@@ -185,15 +186,19 @@ class LauncherRepository(
                 // Ignore missing banner
             }
 
-            // Check auto folder banner: /GhostLauncher/Banners/pkgName.png
+            // Check auto folder banner: /AuraTV/Banners/pkgName.(png|jpg|jpeg|webp) or legacy /GhostLauncher/Banners/
             var customBannerPath = meta?.customBannerPath
-            if (customBannerPath.isNullOrEmpty() && autoFolderBanners.exists()) {
-                val autoFilePng = File(autoFolderBanners, "$pkgName.png")
-                val autoFileJpg = File(autoFolderBanners, "$pkgName.jpg")
-                if (autoFilePng.exists()) {
-                    customBannerPath = autoFilePng.absolutePath
-                } else if (autoFileJpg.exists()) {
-                    customBannerPath = autoFileJpg.absolutePath
+            if (customBannerPath.isNullOrEmpty()) {
+                val bannerFolders = listOf(autoFolderBannersAura, autoFolderBannersLegacy)
+                val extensions = listOf("png", "jpg", "jpeg", "webp")
+                for (folder in bannerFolders) {
+                    if (folder.exists()) {
+                        val matchedFile = extensions.map { File(folder, "$pkgName.$it") }.firstOrNull { it.exists() }
+                        if (matchedFile != null) {
+                            customBannerPath = matchedFile.absolutePath
+                            break
+                        }
+                    }
                 }
             }
 

@@ -67,7 +67,7 @@ fun CustomBannerDialog(
 
                 Text(
                     text = "Enter local file path or image URL for custom 16:9 banner.\n" +
-                            "Tip: Save images to /sdcard/GhostLauncher/Banners/${app.packageName}.png for auto-detection.",
+                            "Tip: Save images to /sdcard/AuraTV/Banners/${app.packageName}.png for automatic detection.",
                     style = MaterialTheme.typography.labelSmall,
                     color = Color.White.copy(alpha = 0.6f),
                     modifier = Modifier.padding(top = 4.dp)
@@ -102,7 +102,7 @@ fun CustomBannerDialog(
                         decorationBox = { innerTextField ->
                             if (pathText.isEmpty()) {
                                 Text(
-                                    text = "/sdcard/GhostLauncher/Banners/banner.png",
+                                    text = "/sdcard/AuraTV/Banners/${app.packageName}.png",
                                     color = Color.White.copy(alpha = 0.4f),
                                     fontSize = 12.sp
                                 )

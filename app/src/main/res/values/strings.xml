@@ -251,4 +251,7 @@ Tip: Save images to /sdcard/AuraTV/Banners/%1$s.png for auto-detection.</string>
     <string name="uninstall_failed_format">Unable to start uninstallation: %1$s</string>
     <string name="storage_free_format">%.1f GB free</string>
     <string name="storage_total_format">%.1f GB total</string>
+    <string name="choose_photo_picker">Choose from System Photo Picker</string>
+    <string name="browse_photo_gallery">Browse Photo Picker</string>
+    <string name="picker_unavailable">System photo picker is not available on this device</string>
 </resources>

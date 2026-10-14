@@ -18,11 +18,19 @@ import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
+import com.example.util.MediaPickerHelper
+import kotlinx.coroutines.launch
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -48,6 +56,25 @@ fun CustomBannerDialog(
     onSaveBannerPath: (String?) -> Unit
 ) {
     var pathText by remember { mutableStateOf(app.customBannerPath ?: "") }
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            coroutineScope.launch {
+                val localPath = MediaPickerHelper.savePickedUriLocally(
+                    context = context,
+                    uri = uri,
+                    subfolder = "banners",
+                    prefix = "banner_${app.packageName}"
+                )
+                if (!localPath.isNullOrEmpty()) {
+                    pathText = localPath
+                }
+            }
+        }
+    }
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -113,7 +140,38 @@ fun CustomBannerDialog(
                     )
                 }
 
-                Spacer(modifier = Modifier.height(20.dp))
+                Spacer(modifier = Modifier.height(10.dp))
+
+                var isPickBtnFocused by remember { mutableStateOf(false) }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(40.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (isPickBtnFocused) TvFocusGlow else TvSurfaceVariant)
+                        .border(1.dp, if (isPickBtnFocused) Color.White else Color.Transparent, RoundedCornerShape(8.dp))
+                        .onFocusChanged { isPickBtnFocused = it.isFocused }
+                        .focusable()
+                        .clickable {
+                            try {
+                                photoPickerLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            } catch (e: Exception) {
+                                Toast.makeText(context, context.getString(R.string.picker_unavailable), Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Text(
+                        text = stringResource(R.string.browse_photo_gallery),
+                        color = if (isPickBtnFocused) Color.Black else Color.White,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 12.sp
+                    )
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),

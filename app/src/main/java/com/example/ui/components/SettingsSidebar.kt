@@ -18,12 +18,20 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.PickVisualMediaRequest
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.CleaningServices
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.ColorLens
 import androidx.compose.material.icons.filled.Folder
 import androidx.compose.material.icons.filled.HelpOutline
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalContext
+import com.example.util.MediaPickerHelper
+import kotlinx.coroutines.launch
 import androidx.compose.material.icons.filled.Palette
 import androidx.compose.material.icons.filled.RestartAlt
 import androidx.compose.material.icons.filled.Save
@@ -77,6 +85,25 @@ fun SettingsSidebar(
     onOpenFolderManager: (() -> Unit)? = null
 ) {
     var versionClickCount by remember { mutableIntStateOf(0) }
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+    val photoPickerLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.PickVisualMedia()
+    ) { uri ->
+        if (uri != null) {
+            coroutineScope.launch {
+                val localPath = MediaPickerHelper.savePickedUriLocally(
+                    context = context,
+                    uri = uri,
+                    subfolder = "wallpapers",
+                    prefix = "wallpaper"
+                )
+                if (!localPath.isNullOrEmpty()) {
+                    onUpdateSettings(settings.copy(wallpaperUri = localPath))
+                }
+            }
+        }
+    }
 
     Dialog(onDismissRequest = onDismiss) {
         Surface(
@@ -497,7 +524,50 @@ fun SettingsSidebar(
                     }
                 }
 
-                Spacer(modifier = Modifier.height(8.dp))
+                Spacer(modifier = Modifier.height(10.dp))
+
+                var isPickerFocused by remember { mutableStateOf(false) }
+                Box(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(38.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .background(if (isPickerFocused) TvFocusGlow else TvPrimary)
+                        .border(1.dp, if (isPickerFocused) Color.White else Color.Transparent, RoundedCornerShape(8.dp))
+                        .onFocusChanged { isPickerFocused = it.isFocused }
+                        .focusable()
+                        .clickable {
+                            try {
+                                photoPickerLauncher.launch(
+                                    PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly)
+                                )
+                            } catch (e: Exception) {
+                                Toast.makeText(context, context.getString(R.string.picker_unavailable), Toast.LENGTH_SHORT).show()
+                            }
+                        },
+                    contentAlignment = Alignment.Center
+                ) {
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Palette,
+                            contentDescription = null,
+                            tint = Color.Black,
+                            modifier = Modifier.size(16.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text(
+                            text = stringResource(R.string.choose_photo_picker),
+                            color = Color.Black,
+                            fontSize = 12.sp,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(12.dp))
 
                 // Custom 4K Wallpaper File Path Input
                 var customWallpaperInput by remember(settings.wallpaperUri) {

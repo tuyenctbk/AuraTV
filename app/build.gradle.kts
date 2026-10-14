@@ -1,4 +1,5 @@
 import com.google.gms.googleservices.GoogleServicesPlugin.MissingGoogleServicesStrategy
+import java.util.Properties
 
 plugins {
   alias(libs.plugins.android.application)
@@ -9,33 +10,51 @@ plugins {
   alias(libs.plugins.google.services)
 }
 
+val localProperties = Properties().apply {
+  val localPropertiesFile = rootProject.file("local.properties")
+  if (localPropertiesFile.exists()) {
+    localPropertiesFile.inputStream().use { load(it) }
+  }
+}
+
 android {
   namespace = "com.example"
   compileSdk { version = release(36) { minorApiLevel = 1 } }
 
   defaultConfig {
-    applicationId = "com.aistudio.ghostlauncher.p8zqk"
+    applicationId = "com.soloprono.auratv"
     minSdk = 24
     targetSdk = 36
-    versionCode = 1
-    versionName = "1.0"
+    versionCode = 2
+    versionName = "1.3"
 
     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
   }
 
   signingConfigs {
     create("release") {
-      val keystorePath = System.getenv("KEYSTORE_PATH") ?: "${rootDir}/my-upload-key.jks"
-      storeFile = file(keystorePath)
-      storePassword = System.getenv("STORE_PASSWORD")
-      keyAlias = "upload"
-      keyPassword = System.getenv("KEY_PASSWORD")
+      val keystoreName = localProperties.getProperty("RELEASE_STORE_FILE")
+        ?: System.getenv("KEYSTORE_PATH")
+        ?: "common_release_key.jks"
+      storeFile = rootProject.file(keystoreName)
+      storePassword = localProperties.getProperty("RELEASE_STORE_PASSWORD")
+        ?: System.getenv("STORE_PASSWORD")
+        ?: "dpadhero123"
+      keyAlias = localProperties.getProperty("RELEASE_KEY_ALIAS")
+        ?: System.getenv("KEY_ALIAS")
+        ?: "dpad_hero_alias"
+      keyPassword = localProperties.getProperty("RELEASE_KEY_PASSWORD")
+        ?: System.getenv("KEY_PASSWORD")
+        ?: "dpadhero123"
     }
-    create("debugConfig") {
-      storeFile = file("${rootDir}/debug.keystore")
-      storePassword = "android"
-      keyAlias = "androiddebugkey"
-      keyPassword = "android"
+    val debugKeystore = rootProject.file("debug.keystore")
+    if (debugKeystore.exists()) {
+      create("debugConfig") {
+        storeFile = debugKeystore
+        storePassword = "android"
+        keyAlias = "androiddebugkey"
+        keyPassword = "android"
+      }
     }
   }
 
@@ -46,7 +65,11 @@ android {
       proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
       signingConfig = signingConfigs.getByName("release")
     }
-    debug { signingConfig = signingConfigs.getByName("debugConfig") }
+    debug {
+      if (signingConfigs.findByName("debugConfig") != null) {
+        signingConfig = signingConfigs.getByName("debugConfig")
+      }
+    }
   }
   compileOptions {
     sourceCompatibility = JavaVersion.VERSION_11
@@ -103,7 +126,6 @@ dependencies {
   implementation(libs.androidx.palette.ktx)
   implementation(libs.coil.compose)
   implementation(libs.converter.moshi)
-  implementation(libs.firebase.ai)
   implementation("com.google.firebase:firebase-analytics")
   implementation("com.google.firebase:firebase-crashlytics")
   implementation("com.google.firebase:firebase-config")
@@ -116,7 +138,6 @@ dependencies {
   // implementation(libs.androidx.credentials)
   // implementation(libs.androidx.credentials.play.services)
   // implementation(libs.googleid)
-  implementation(libs.firebase.appcheck.recaptcha)
   implementation(libs.kotlinx.coroutines.android)
   implementation(libs.kotlinx.coroutines.core)
   implementation(libs.logging.interceptor)

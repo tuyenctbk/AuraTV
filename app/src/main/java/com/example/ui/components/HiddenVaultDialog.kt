@@ -120,7 +120,7 @@ fun HiddenVaultDialog(
                         decorationBox = { innerTextField ->
                             if (codeText.isEmpty()) {
                                 Text(
-                                    text = "Enter passcode...",
+                                    text = stringResource(R.string.enter_passcode_hint),
                                     color = Color.White.copy(alpha = 0.4f),
                                     fontSize = 14.sp
                                 )

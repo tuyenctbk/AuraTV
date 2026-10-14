@@ -51,18 +51,23 @@ fun Modifier.dpadFocusEffect(
         if (usePaletteExtraction && sourceDrawable != null) {
             withContext(Dispatchers.Default) {
                 try {
-                    val bitmap = if (sourceDrawable is BitmapDrawable && sourceDrawable.bitmap != null) {
-                        sourceDrawable.bitmap
+                    val srcBmp = (sourceDrawable as? BitmapDrawable)?.bitmap
+                    val bitmap = if (srcBmp != null && !srcBmp.isRecycled) {
+                        if (srcBmp.width > 96 || srcBmp.height > 96) {
+                            Bitmap.createScaledBitmap(srcBmp, 96, 96, false)
+                        } else {
+                            srcBmp
+                        }
                     } else {
-                        val w = sourceDrawable.intrinsicWidth.coerceAtLeast(1)
-                        val h = sourceDrawable.intrinsicHeight.coerceAtLeast(1)
+                        val w = 96
+                        val h = 96
                         val bmp = Bitmap.createBitmap(w, h, Bitmap.Config.ARGB_8888)
                         val canvas = android.graphics.Canvas(bmp)
                         sourceDrawable.setBounds(0, 0, w, h)
                         sourceDrawable.draw(canvas)
                         bmp
                     }
-                    val palette = Palette.from(bitmap).generate()
+                    val palette = Palette.from(bitmap).maximumColorCount(16).generate()
                     val swatch = palette.vibrantSwatch ?: palette.lightVibrantSwatch ?: palette.dominantSwatch
                     if (swatch != null) {
                         extractedColor = Color(swatch.rgb)

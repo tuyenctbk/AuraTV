@@ -22,17 +22,50 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.io.File
 
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
+import java.util.concurrent.ConcurrentHashMap
 
 class LauncherRepository(
     private val context: Context,
     private val appDao: AppDao,
     private val settingsDao: SettingsDao
 ) {
+    private val iconCache = ConcurrentHashMap<String, Drawable?>()
+    private val bannerCache = ConcurrentHashMap<String, Drawable?>()
+    private val labelCache = ConcurrentHashMap<String, String>()
+    private val autoBannerPathCache = ConcurrentHashMap<String, String?>()
+    private val packageInfoCache = ConcurrentHashMap<String, PackageVersionInfo>()
+
+    private data class PackageVersionInfo(
+        val versionName: String,
+        val versionCode: Long,
+        val firstInstallTime: Long,
+        val lastUpdateTime: Long
+    )
+
     val settingsFlow: Flow<UserSettingsEntity?> = settingsDao.getSettingsFlow()
 
-    val appsFlow: Flow<List<AppItem>> = appDao.getAllMetadata().map { metadataList ->
-        scanInstalledApps(metadataList.associateBy { it.packageName })
+    val appsFlow: Flow<List<AppItem>> = appDao.getAllMetadata()
+        .map { metadataList ->
+            scanInstalledApps(metadataList.associateBy { it.packageName })
+        }
+        .flowOn(Dispatchers.IO)
+
+    fun invalidateAppCache(packageName: String? = null) {
+        if (packageName != null) {
+            iconCache.remove(packageName)
+            bannerCache.remove(packageName)
+            labelCache.remove(packageName)
+            autoBannerPathCache.remove(packageName)
+            packageInfoCache.remove(packageName)
+        } else {
+            iconCache.clear()
+            bannerCache.clear()
+            labelCache.clear()
+            autoBannerPathCache.clear()
+            packageInfoCache.clear()
+        }
     }
 
     suspend fun getSettings(): UserSettingsEntity {
@@ -125,6 +158,7 @@ class LauncherRepository(
     suspend fun clearAllMetadata() {
         withContext(Dispatchers.IO) {
             appDao.clearAll()
+            invalidateAppCache()
         }
     }
 
@@ -147,21 +181,28 @@ class LauncherRepository(
         }
     }
 
-    private fun scanInstalledApps(metadataMap: Map<String, AppMetadataEntity>): List<AppItem> {
+    private suspend fun scanInstalledApps(metadataMap: Map<String, AppMetadataEntity>): List<AppItem> = withContext(Dispatchers.IO) {
         val pm = context.packageManager
 
         // Query Leanback TV Launcher intents
         val leanbackIntent = Intent(Intent.ACTION_MAIN).apply {
             addCategory(Intent.CATEGORY_LEANBACK_LAUNCHER)
         }
-        val leanbackActivities = pm.queryIntentActivities(leanbackIntent, 0)
-            .associateBy { it.activityInfo.packageName }
+        val leanbackActivities = try {
+            pm.queryIntentActivities(leanbackIntent, 0)
+        } catch (e: Throwable) {
+            emptyList()
+        }.associateBy { it.activityInfo.packageName }
 
         // Query standard Launcher intents
         val launcherIntent = Intent(Intent.ACTION_MAIN).apply {
             addCategory(Intent.CATEGORY_LAUNCHER)
         }
-        val launcherActivities = pm.queryIntentActivities(launcherIntent, 0)
+        val launcherActivities = try {
+            pm.queryIntentActivities(launcherIntent, 0)
+        } catch (e: Throwable) {
+            emptyList()
+        }
 
         val ownPackageName = context.packageName
 
@@ -191,32 +232,61 @@ class LauncherRepository(
 
             val meta = metadataMap[pkgName]
 
-            val label = meta?.customTitle ?: resolveInfo.loadLabel(pm).toString()
-            val iconDrawable: Drawable? = resolveInfo.loadIcon(pm)
+            val defaultLabel = labelCache.getOrPut(pkgName) {
+                try {
+                    val raw = resolveInfo.loadLabel(pm).toString().trim()
+                    if (raw.isNotBlank()) raw else pkgName.substringAfterLast('.').ifBlank { pkgName }
+                } catch (e: Throwable) {
+                    pkgName.substringAfterLast('.').ifBlank { pkgName }
+                }
+            }
+            val label = meta?.customTitle?.trim()?.takeIf { it.isNotBlank() } ?: defaultLabel
+
+            val iconDrawable: Drawable? = if (iconCache.containsKey(pkgName)) {
+                iconCache[pkgName]
+            } else {
+                val loaded = try {
+                    resolveInfo.loadIcon(pm)
+                } catch (e: Throwable) {
+                    null
+                }
+                iconCache[pkgName] = loaded
+                loaded
+            }
 
             var bannerDrawable: Drawable? = null
-            try {
-                if (isLeanback) {
-                    bannerDrawable = resolveInfo.activityInfo.loadBanner(pm)
-                        ?: resolveInfo.activityInfo.applicationInfo.loadBanner(pm)
+            if (isLeanback) {
+                bannerDrawable = if (bannerCache.containsKey(pkgName)) {
+                    bannerCache[pkgName]
+                } else {
+                    val loaded = try {
+                        resolveInfo.activityInfo.loadBanner(pm)
+                            ?: resolveInfo.activityInfo.applicationInfo.loadBanner(pm)
+                    } catch (e: Throwable) {
+                        null
+                    }
+                    bannerCache[pkgName] = loaded
+                    loaded
                 }
-            } catch (e: Exception) {
-                // Ignore missing banner
             }
 
             // Check auto folder banner: /AuraTV/Banners/pkgName.(png|jpg|jpeg|webp) or legacy /GhostLauncher/Banners/
             var customBannerPath = meta?.customBannerPath
             if (customBannerPath.isNullOrEmpty()) {
-                val bannerFolders = listOf(autoFolderBannersAura, autoFolderBannersLegacy)
-                val extensions = listOf("png", "jpg", "jpeg", "webp")
-                for (folder in bannerFolders) {
-                    if (folder.exists()) {
-                        val matchedFile = extensions.map { File(folder, "$pkgName.$it") }.firstOrNull { it.exists() }
-                        if (matchedFile != null) {
-                            customBannerPath = matchedFile.absolutePath
-                            break
+                customBannerPath = autoBannerPathCache.getOrPut(pkgName) {
+                    var found: String? = null
+                    val bannerFolders = listOf(autoFolderBannersAura, autoFolderBannersLegacy)
+                    val extensions = listOf("png", "jpg", "jpeg", "webp")
+                    for (folder in bannerFolders) {
+                        if (folder.exists()) {
+                            val matchedFile = extensions.map { File(folder, "$pkgName.$it") }.firstOrNull { it.exists() }
+                            if (matchedFile != null) {
+                                found = matchedFile.absolutePath
+                                break
+                            }
                         }
                     }
+                    found
                 }
             }
 
@@ -271,30 +341,33 @@ class LauncherRepository(
             val isHidden = meta?.isHidden ?: false
             val fastLaunchKey = meta?.fastLaunchKey
 
-            var versionName = ""
-            var versionCode = 0L
-            var firstInstallTime = 0L
-            var lastUpdateTime = 0L
-            try {
-                val pInfo = pm.getPackageInfo(pkgName, 0)
-                versionName = pInfo.versionName ?: ""
-                versionCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
-                    pInfo.longVersionCode
-                } else {
-                    @Suppress("DEPRECATION")
-                    pInfo.versionCode.toLong()
+            val pkgInfo = packageInfoCache.getOrPut(pkgName) {
+                var vName = ""
+                var vCode = 0L
+                var fInstall = 0L
+                var lUpdate = 0L
+                try {
+                    val pInfo = pm.getPackageInfo(pkgName, 0)
+                    vName = pInfo.versionName ?: ""
+                    vCode = if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.P) {
+                        pInfo.longVersionCode
+                    } else {
+                        @Suppress("DEPRECATION")
+                        pInfo.versionCode.toLong()
+                    }
+                    fInstall = pInfo.firstInstallTime
+                    lUpdate = pInfo.lastUpdateTime
+                } catch (e: Throwable) {
+                    // ignore
                 }
-                firstInstallTime = pInfo.firstInstallTime
-                lastUpdateTime = pInfo.lastUpdateTime
-            } catch (e: Exception) {
-                // ignore
+                PackageVersionInfo(vName, vCode, fInstall, lUpdate)
             }
 
             items.add(
                 AppItem(
                     packageName = pkgName,
                     activityName = resolveInfo.activityInfo.name,
-                    label = label,
+                    label = label.ifBlank { pkgName.substringAfterLast('.').ifBlank { pkgName } },
                     iconDrawable = iconDrawable,
                     bannerDrawable = bannerDrawable,
                     customBannerPath = customBannerPath,
@@ -303,17 +376,17 @@ class LauncherRepository(
                     isHidden = isHidden,
                     fastLaunchKey = fastLaunchKey,
                     isSystem = isSystem,
-                    versionName = versionName,
-                    versionCode = versionCode,
-                    firstInstallTime = firstInstallTime,
-                    lastUpdateTime = lastUpdateTime,
+                    versionName = pkgInfo.versionName,
+                    versionCode = pkgInfo.versionCode,
+                    firstInstallTime = pkgInfo.firstInstallTime,
+                    lastUpdateTime = pkgInfo.lastUpdateTime,
                     launchCount = meta?.launchCount ?: 0,
                     lastLaunchedTime = meta?.lastLaunchedTime ?: 0L
                 )
             )
         }
 
-        return items.sortedWith(
+        items.sortedWith(
             compareBy<AppItem> { if (it.category == "Favorites") 0 else 1 }
                 .thenBy { it.label.lowercase() }
         )
@@ -406,6 +479,7 @@ class LauncherRepository(
                     }
                 }
             }
+            invalidateAppCache()
         }
     }
 }

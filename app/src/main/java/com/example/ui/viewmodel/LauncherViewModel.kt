@@ -13,6 +13,7 @@ import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfigSettings
+import com.example.R
 import com.example.data.db.AppMetadataEntity
 import com.example.data.db.GhostDatabase
 import com.example.data.db.UserSettingsEntity
@@ -147,19 +148,20 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
     fun shareApp() {
         dismissSharePrompt()
         try {
+            val app = getApplication<Application>()
             val intent = Intent(Intent.ACTION_SEND).apply {
                 type = "text/plain"
-                putExtra(Intent.EXTRA_SUBJECT, "Check out Aura TV")
-                putExtra(Intent.EXTRA_TEXT, "Aura TV is a fantastic, minimalist Android TV launcher! Check it out.")
+                putExtra(Intent.EXTRA_SUBJECT, app.getString(R.string.share_subject))
+                putExtra(Intent.EXTRA_TEXT, app.getString(R.string.share_body))
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            val chooser = Intent.createChooser(intent, "Share Aura TV").apply {
+            val chooser = Intent.createChooser(intent, app.getString(R.string.share_chooser_title)).apply {
                 addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             }
-            getApplication<Application>().startActivity(chooser)
+            app.startActivity(chooser)
             safeLogEvent("app_shared", null)
         } catch (e: Exception) {
-            Toast.makeText(getApplication(), "Unable to share app", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.unable_to_share), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -188,7 +190,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                 }
                 getApplication<Application>().startActivity(intent)
             } catch (ex: Exception) {
-                Toast.makeText(getApplication(), "Unable to open Play Store", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.unable_to_open_store), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -242,7 +244,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                 intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                 getApplication<Application>().startActivity(intent)
             } else {
-                Toast.makeText(getApplication(), "Unable to launch ${app.label}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.unable_to_launch_format, app.label), Toast.LENGTH_SHORT).show()
             }
         } catch (e: Exception) {
             if (isFirebaseAvailable) {
@@ -250,14 +252,14 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                     FirebaseCrashlytics.getInstance().recordException(e)
                 } catch (_: Exception) {}
             }
-            Toast.makeText(getApplication(), "Error launching ${app.label}: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.error_launching_format, app.label, e.localizedMessage ?: ""), Toast.LENGTH_SHORT).show()
         }
     }
 
     fun uninstallApp(app: AppItem) {
         try {
             if (app.isSystem) {
-                Toast.makeText(getApplication(), "System app cannot be uninstalled. Opening App Info.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.uninstall_system_app_warning), Toast.LENGTH_SHORT).show()
                 openAppDetails(app)
                 return
             }
@@ -278,7 +280,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                 }
                 getApplication<Application>().startActivity(fallbackIntent)
             } catch (ex: Exception) {
-                Toast.makeText(getApplication(), "Unable to start uninstallation: ${ex.localizedMessage}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.uninstall_failed_format, ex.localizedMessage ?: ""), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -306,7 +308,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
             }
             getApplication<Application>().startActivity(intent)
         } catch (e: Exception) {
-            Toast.makeText(getApplication(), "Failed to open App Info", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.failed_open_app_info), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -324,7 +326,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
             repository.setAppCategory(app.packageName, newCat)
             Toast.makeText(
                 getApplication(),
-                if (newCat == "Favorites") "Added ${app.label} to Favorites" else "Removed ${app.label} from Favorites",
+                if (newCat == "Favorites") getApplication<Application>().getString(R.string.app_added_favorites, app.label) else getApplication<Application>().getString(R.string.app_removed_favorites, app.label),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -336,7 +338,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
             repository.setAppHidden(app.packageName, nextState)
             Toast.makeText(
                 getApplication(),
-                if (nextState) "Hidden ${app.label}" else "Unhidden ${app.label}",
+                if (nextState) getApplication<Application>().getString(R.string.app_hidden_format, app.label) else getApplication<Application>().getString(R.string.app_unhidden_format, app.label),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -345,14 +347,14 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
     fun setCustomBanner(app: AppItem, bannerPath: String?) {
         viewModelScope.launch {
             repository.setAppCustomBanner(app.packageName, bannerPath)
-            Toast.makeText(getApplication(), "Banner updated for ${app.label}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.banner_updated_format, app.label), Toast.LENGTH_SHORT).show()
         }
     }
 
     fun setAppCategory(app: AppItem, category: String) {
         viewModelScope.launch {
             repository.setAppCategory(app.packageName, category)
-            Toast.makeText(getApplication(), "Moved ${app.label} to $category", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.moved_category_format, app.label, category), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -361,7 +363,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
             repository.setFastLaunchKey(app.packageName, key)
             Toast.makeText(
                 getApplication(),
-                if (key != null) "Mapped Hotkey $key to ${app.label}" else "Cleared Hotkey for ${app.label}",
+                if (key != null) getApplication<Application>().getString(R.string.hotkey_mapped_format, key, app.label) else getApplication<Application>().getString(R.string.hotkey_cleared_format, app.label),
                 Toast.LENGTH_SHORT
             ).show()
         }
@@ -386,7 +388,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
             isVaultUnlocked.value = !isVaultUnlocked.value
             Toast.makeText(
                 getApplication(),
-                if (isVaultUnlocked.value) "Stealth Vault Unlocked!" else "Stealth Vault Locked!",
+                if (isVaultUnlocked.value) getApplication<Application>().getString(R.string.vault_unlocked_toast) else getApplication<Application>().getString(R.string.vault_locked_toast),
                 Toast.LENGTH_LONG
             ).show()
             keySequenceList.clear()
@@ -394,12 +396,13 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
     }
 
     fun unlockVaultWithCode(enteredCode: String): Boolean {
-        if (enteredCode.trim().uppercase() == "GHOST" || enteredCode.trim() == "1234" || enteredCode.trim() == settings.value.vaultSequence) {
+        val trimmed = enteredCode.trim().uppercase()
+        if (trimmed == "AURA" || trimmed == "GHOST" || enteredCode.trim() == "1234" || enteredCode.trim() == settings.value.vaultSequence) {
             isVaultUnlocked.value = true
-            Toast.makeText(getApplication(), "Stealth Vault Unlocked!", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.vault_unlocked_toast), Toast.LENGTH_SHORT).show()
             return true
         }
-        Toast.makeText(getApplication(), "Incorrect Vault Code", Toast.LENGTH_SHORT).show()
+        Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.vault_incorrect_code), Toast.LENGTH_SHORT).show()
         return false
     }
 
@@ -410,10 +413,10 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                     metadataList = emptyList(), // repository gets all from flow
                     settings = settings.value
                 )
-                val backupFile = File(getApplication<Application>().getExternalFilesDir(null), "ghostlauncher_backup.json")
+                val backupFile = File(getApplication<Application>().getExternalFilesDir(null), "auratv_backup.json")
                 backupFile.writeText(json)
                 statusMessage.value = "Exported backup to: ${backupFile.absolutePath}"
-                Toast.makeText(getApplication(), "Backup saved to ${backupFile.name}", Toast.LENGTH_LONG).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.backup_saved_toast, backupFile.name), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 statusMessage.value = "Backup failed: ${e.localizedMessage}"
             }
@@ -425,7 +428,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
             try {
                 repository.importBackupJson(jsonText)
                 statusMessage.value = "Backup restored successfully!"
-                Toast.makeText(getApplication(), "Configuration Restored!", Toast.LENGTH_LONG).show()
+                Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.config_restored_toast), Toast.LENGTH_LONG).show()
             } catch (e: Exception) {
                 statusMessage.value = "Import failed: ${e.localizedMessage}"
             }
@@ -435,7 +438,7 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
     fun resetAllBannersAndMetadata() {
         viewModelScope.launch {
             repository.clearAllMetadata()
-            Toast.makeText(getApplication(), "Banners and Custom Metadata Reset", Toast.LENGTH_SHORT).show()
+            Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.banners_reset_toast), Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -446,11 +449,11 @@ class LauncherViewModel(application: Application) : AndroidViewModel(application
                 loader.memoryCache?.clear()
                 loader.diskCache?.clear()
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(getApplication(), "Coil Image Cache Cleared Successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.cache_cleared_success_toast), Toast.LENGTH_SHORT).show()
                 }
             } catch (e: Exception) {
                 withContext(Dispatchers.Main) {
-                    Toast.makeText(getApplication(), "Cache Clear Error: ${e.localizedMessage}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(getApplication(), getApplication<Application>().getString(R.string.cache_clear_error_format, e.localizedMessage ?: ""), Toast.LENGTH_SHORT).show()
                 }
             }
         }

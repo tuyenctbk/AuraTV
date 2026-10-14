@@ -53,9 +53,11 @@ import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import com.example.R
 import com.example.data.db.UserSettingsEntity
 import com.example.ui.theme.TvFocusGlow
 import com.example.ui.theme.TvPrimary
@@ -100,13 +102,13 @@ fun SettingsSidebar(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.Settings,
-                            contentDescription = "Settings",
+                            contentDescription = stringResource(R.string.settings_title),
                             tint = TvPrimary,
                             modifier = Modifier.size(24.dp)
                         )
                         Spacer(modifier = Modifier.width(10.dp))
                         Text(
-                            text = "Launcher Settings",
+                            text = stringResource(R.string.settings_title),
                             style = MaterialTheme.typography.titleLarge,
                             color = Color.White,
                             fontWeight = FontWeight.Bold
@@ -126,7 +128,7 @@ fun SettingsSidebar(
                     ) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close",
+                            contentDescription = stringResource(R.string.close),
                             tint = if (isCloseFocused) Color.Black else Color.White,
                             modifier = Modifier.size(18.dp)
                         )
@@ -136,13 +138,13 @@ fun SettingsSidebar(
                 Spacer(modifier = Modifier.height(20.dp))
 
                 // Section 1: UI Layout
-                SettingsSectionHeader(icon = Icons.Default.Tv, title = "Grid & Display Layout")
+                SettingsSectionHeader(icon = Icons.Default.Tv, title = stringResource(R.string.section_grid_display))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 // Columns Selector
                 Text(
-                    text = "Grid Columns: ${settings.columnsCount}",
+                    text = stringResource(R.string.grid_columns_format, settings.columnsCount),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
@@ -163,15 +165,15 @@ fun SettingsSidebar(
                                 .height(38.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(if (isBtnFocused) TvFocusGlow else (if (isSelected) TvPrimary else TvSurfaceVariant))
-                                .onFocusChanged { isBtnFocused = it.isFocused }
-                                .focusable()
-                                .clickable {
-                                    onUpdateSettings(settings.copy(columnsCount = cols))
-                                },
+                            .onFocusChanged { isBtnFocused = it.isFocused }
+                            .focusable()
+                            .clickable {
+                                onUpdateSettings(settings.copy(columnsCount = cols))
+                            },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "$cols Cols",
+                                text = stringResource(R.string.cols_format, cols),
                                 color = if (isBtnFocused || isSelected) Color.Black else Color.White,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp
@@ -184,7 +186,7 @@ fun SettingsSidebar(
 
                 // Card Ratio
                 Text(
-                    text = "Card Aspect Ratio",
+                    text = stringResource(R.string.card_aspect_ratio),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
@@ -205,15 +207,15 @@ fun SettingsSidebar(
                                 .height(38.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(if (isBtnFocused) TvFocusGlow else (if (isSelected) TvPrimary else TvSurfaceVariant))
-                                .onFocusChanged { isBtnFocused = it.isFocused }
-                                .focusable()
-                                .clickable {
-                                    onUpdateSettings(settings.copy(cardRatio = ratio))
-                                },
+                            .onFocusChanged { isBtnFocused = it.isFocused }
+                            .focusable()
+                            .clickable {
+                                onUpdateSettings(settings.copy(cardRatio = ratio))
+                            },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = if (ratio == "16:9") "16:9 TV Banner" else "1:1 Mobile Square",
+                                text = if (ratio == "16:9") stringResource(R.string.aspect_ratio_16_9) else stringResource(R.string.aspect_ratio_1_1),
                                 color = if (isBtnFocused || isSelected) Color.Black else Color.White,
                                 fontWeight = FontWeight.Bold,
                                 fontSize = 12.sp
@@ -226,25 +228,25 @@ fun SettingsSidebar(
 
                 // Toggles
                 SettingsToggleRow(
-                    title = "Show App Labels",
+                    title = stringResource(R.string.show_app_labels),
                     checked = settings.showLabels,
                     onCheckedChange = { onUpdateSettings(settings.copy(showLabels = it)) }
                 )
 
                 SettingsToggleRow(
-                    title = "Reduce Motion (Low-RAM Performance)",
+                    title = stringResource(R.string.reduce_motion_desc),
                     checked = settings.reduceMotion,
                     onCheckedChange = { onUpdateSettings(settings.copy(reduceMotion = it)) }
                 )
 
                 SettingsToggleRow(
-                    title = "Show Free Storage Bar",
+                    title = stringResource(R.string.show_storage_desc),
                     checked = settings.showStorageWidget,
                     onCheckedChange = { onUpdateSettings(settings.copy(showStorageWidget = it)) }
                 )
 
                 SettingsToggleRow(
-                    title = "Show Digital Clock",
+                    title = stringResource(R.string.show_clock_desc),
                     checked = settings.showClockWidget,
                     onCheckedChange = { onUpdateSettings(settings.copy(showClockWidget = it)) }
                 )
@@ -253,7 +255,7 @@ fun SettingsSidebar(
 
                 // App Grid Sorting Order
                 Text(
-                    text = "App Grid Sort Order",
+                    text = stringResource(R.string.app_sort_order),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
@@ -266,10 +268,10 @@ fun SettingsSidebar(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     listOf(
-                        "ALPHABETICAL" to "A-Z",
-                        "RECENTLY_USED" to "Recent",
-                        "FREQUENTLY_USED" to "Frequent",
-                        "INSTALL_DATE" to "Newest"
+                        "ALPHABETICAL" to stringResource(R.string.sort_alphabetical_short),
+                        "RECENTLY_USED" to stringResource(R.string.sort_recent_short),
+                        "FREQUENTLY_USED" to stringResource(R.string.sort_frequent_short),
+                        "INSTALL_DATE" to stringResource(R.string.sort_newest_short)
                     ).forEach { (sortKey, sortLabel) ->
                         val isSelected = settings.sortOrder == sortKey
                         var isSortFocused by remember { mutableStateOf(false) }
@@ -280,11 +282,11 @@ fun SettingsSidebar(
                                 .height(36.dp)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(if (isSortFocused) TvFocusGlow else (if (isSelected) TvPrimary else TvSurfaceVariant))
-                                .onFocusChanged { isSortFocused = it.isFocused }
-                                .focusable()
-                                .clickable {
-                                    onUpdateSettings(settings.copy(sortOrder = sortKey))
-                                },
+                            .onFocusChanged { isSortFocused = it.isFocused }
+                            .focusable()
+                            .clickable {
+                                onUpdateSettings(settings.copy(sortOrder = sortKey))
+                            },
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -302,7 +304,7 @@ fun SettingsSidebar(
                 // App Visibility & Folder Shortcuts
                 if (onOpenAppVisibilityManager != null || onOpenFolderManager != null) {
                     Text(
-                        text = "App & Folder Organization",
+                        text = stringResource(R.string.app_folder_org),
                         color = Color.White,
                         fontSize = 13.sp,
                         fontWeight = FontWeight.SemiBold
@@ -332,13 +334,13 @@ fun SettingsSidebar(
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Column {
                                     Text(
-                                        text = "Manage App Visibility (Hide/Show)",
+                                        text = stringResource(R.string.manage_app_visibility),
                                         color = if (isVisBtnFocused) Color.Black else Color.White,
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                     Text(
-                                        text = "Toggle which apps appear on your home screen",
+                                        text = stringResource(R.string.toggle_apps_home),
                                         color = if (isVisBtnFocused) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.5f),
                                         fontSize = 10.sp
                                     )
@@ -371,13 +373,13 @@ fun SettingsSidebar(
                                 Spacer(modifier = Modifier.width(10.dp))
                                 Column {
                                     Text(
-                                        text = "Organize User Folders",
+                                        text = stringResource(R.string.organize_folders),
                                         color = if (isFldBtnFocused) Color.Black else Color.White,
                                         fontSize = 12.sp,
                                         fontWeight = FontWeight.Bold
                                     )
                                     Text(
-                                        text = "Create folders and move icons for a clean home screen",
+                                        text = stringResource(R.string.organize_folders_desc),
                                         color = if (isFldBtnFocused) Color.Black.copy(alpha = 0.7f) else Color.White.copy(alpha = 0.5f),
                                         fontSize = 10.sp
                                     )
@@ -390,22 +392,27 @@ fun SettingsSidebar(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "OLED Screensaver Inactivity Timeout",
+                    text = stringResource(R.string.screensaver_label),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "Triggers an OLED-safe ambient black screen after inactivity to prevent display burn-in.",
+                    text = stringResource(R.string.screensaver_desc),
                     color = Color.White.copy(alpha = 0.5f),
                     fontSize = 10.sp
                 )
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                val screensaverOptions = remember {
-                    listOf(0 to "Off", 1 to "1 Min", 3 to "3 Min", 5 to "5 Min", 10 to "10 Min", 15 to "15 Min")
-                }
+                val screensaverOptions = listOf(
+                    0 to stringResource(R.string.screensaver_off),
+                    1 to stringResource(R.string.screensaver_min, 1),
+                    3 to stringResource(R.string.screensaver_min, 3),
+                    5 to stringResource(R.string.screensaver_min, 5),
+                    10 to stringResource(R.string.screensaver_min, 10),
+                    15 to stringResource(R.string.screensaver_min, 15)
+                )
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(4.dp)
@@ -419,12 +426,12 @@ fun SettingsSidebar(
                                 .weight(1f)
                                 .clip(RoundedCornerShape(8.dp))
                                 .background(if (isSelected) TvPrimary else (if (isOptFocused) TvFocusGlow else TvSurfaceVariant))
-                                .onFocusChanged { isOptFocused = it.isFocused }
-                                .focusable()
-                                .clickable {
-                                    onUpdateSettings(settings.copy(screensaverTimeoutMinutes = mins))
-                                }
-                                .padding(vertical = 8.dp),
+                            .onFocusChanged { isOptFocused = it.isFocused }
+                            .focusable()
+                            .clickable {
+                                onUpdateSettings(settings.copy(screensaverTimeoutMinutes = mins))
+                            }
+                            .padding(vertical = 8.dp),
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
@@ -443,12 +450,12 @@ fun SettingsSidebar(
                 )
 
                 // Section 2: Wallpaper Engine
-                SettingsSectionHeader(icon = Icons.Default.Palette, title = "4K Wallpaper Engine & Dimmer")
+                SettingsSectionHeader(icon = Icons.Default.Palette, title = stringResource(R.string.section_wallpaper_engine))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Preset Themes",
+                    text = stringResource(R.string.preset_themes),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
@@ -460,9 +467,9 @@ fun SettingsSidebar(
                     horizontalArrangement = Arrangement.spacedBy(6.dp)
                 ) {
                     listOf(
-                        "preset_dark_cyber" to "Dark Cyber",
-                        "preset_neon_aurora" to "Aurora",
-                        "preset_cyber_grid" to "Deep Slate"
+                        "preset_dark_cyber" to stringResource(R.string.preset_dark_cyber),
+                        "preset_neon_aurora" to stringResource(R.string.preset_neon_aurora),
+                        "preset_cyber_grid" to stringResource(R.string.preset_cyber_grid)
                     ).forEach { (presetKey, presetLabel) ->
                         val isSelected = settings.wallpaperUri == presetKey
                         var isBtnFocused by remember { mutableStateOf(false) }
@@ -499,7 +506,7 @@ fun SettingsSidebar(
                 var isWpInputFocused by remember { mutableStateOf(false) }
 
                 Text(
-                    text = "Custom Local 4K Image Path / URI",
+                    text = stringResource(R.string.custom_wallpaper_path),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
@@ -529,7 +536,7 @@ fun SettingsSidebar(
                         decorationBox = { innerTextField ->
                             if (customWallpaperInput.isEmpty()) {
                                 Text(
-                                    text = "e.g. /sdcard/Pictures/wallpaper.jpg or https://...",
+                                    text = stringResource(R.string.custom_wallpaper_hint),
                                     color = Color.White.copy(alpha = 0.4f),
                                     fontSize = 11.sp
                                 )
@@ -553,7 +560,7 @@ fun SettingsSidebar(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Apply",
+                                text = stringResource(R.string.apply),
                                 color = Color.Black,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
@@ -565,13 +572,13 @@ fun SettingsSidebar(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Background Brightness Dimmer: ${(settings.wallpaperDimLevel * 100).toInt()}%",
+                    text = stringResource(R.string.brightness_dimmer_format, (settings.wallpaperDimLevel * 100).toInt()),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "Higher dimming improves contrast & app label legibility over bright 4K wallpapers.",
+                    text = stringResource(R.string.dimmer_desc),
                     color = Color.White.copy(alpha = 0.5f),
                     fontSize = 10.sp
                 )
@@ -593,13 +600,13 @@ fun SettingsSidebar(
                 )
 
                 // Section 3: Accent Color & Focus Glow System
-                SettingsSectionHeader(icon = Icons.Default.ColorLens, title = "Accent Color & Glow Effect")
+                SettingsSectionHeader(icon = Icons.Default.ColorLens, title = stringResource(R.string.section_accent_glow))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 SettingsToggleRow(
-                    title = "Extract Accent from App Icon (Palette API)",
-                    subtitle = "Automatically extracts dynamic vibrant border glow colors from focused app icons.",
+                    title = stringResource(R.string.extract_accent_title),
+                    subtitle = stringResource(R.string.extract_accent_desc),
                     checked = settings.usePaletteExtraction,
                     onCheckedChange = { onUpdateSettings(settings.copy(usePaletteExtraction = it)) }
                 )
@@ -607,30 +614,28 @@ fun SettingsSidebar(
                 Spacer(modifier = Modifier.height(10.dp))
 
                 Text(
-                    text = "Global Accent Theme Swatch",
+                    text = stringResource(R.string.global_accent_theme),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = if (settings.usePaletteExtraction) "Used as fallback when icon palette is missing" else "Used as primary focus border glow color for all app cards",
+                    text = if (settings.usePaletteExtraction) stringResource(R.string.accent_fallback_desc) else stringResource(R.string.accent_primary_desc),
                     color = Color.White.copy(alpha = 0.5f),
                     fontSize = 10.sp
                 )
 
                 Spacer(modifier = Modifier.height(6.dp))
 
-                val accentSwatches = remember {
-                    listOf(
-                        "#D0BCFF" to "Lavender",
-                        "#00E5FF" to "Cyan",
-                        "#00E676" to "Emerald",
-                        "#FFD700" to "Gold",
-                        "#FF1744" to "Crimson",
-                        "#FF4081" to "Pink",
-                        "#9C27B0" to "Purple"
-                    )
-                }
+                val accentSwatches = listOf(
+                    "#D0BCFF" to stringResource(R.string.color_lavender),
+                    "#00E5FF" to stringResource(R.string.color_cyan),
+                    "#00E676" to stringResource(R.string.color_emerald),
+                    "#FFD700" to stringResource(R.string.color_gold),
+                    "#FF1744" to stringResource(R.string.color_crimson),
+                    "#FF4081" to stringResource(R.string.color_pink),
+                    "#9C27B0" to stringResource(R.string.color_purple)
+                )
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -676,13 +681,13 @@ fun SettingsSidebar(
                 )
 
                 // Section 4: Custom Folders & Categories
-                SettingsSectionHeader(icon = Icons.Default.Folder, title = "Custom Folders & Categories")
+                SettingsSectionHeader(icon = Icons.Default.Folder, title = stringResource(R.string.section_custom_folders))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 SettingsToggleRow(
-                    title = "Show Category Section Headers in Grid",
-                    subtitle = "Displays text section headers above app groups (e.g. 'Streaming', 'Games') in the app grid.",
+                    title = stringResource(R.string.show_category_headers_title),
+                    subtitle = stringResource(R.string.show_category_headers_desc),
                     checked = settings.showCategoryHeaders,
                     onCheckedChange = { onUpdateSettings(settings.copy(showCategoryHeaders = it)) }
                 )
@@ -693,7 +698,7 @@ fun SettingsSidebar(
                 var isFolderInputFocused by remember { mutableStateOf(false) }
 
                 Text(
-                    text = "Create Custom Folder (e.g. Streaming, Games)",
+                    text = stringResource(R.string.create_custom_folder),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
@@ -723,7 +728,7 @@ fun SettingsSidebar(
                         decorationBox = { innerTextField ->
                             if (newFolderName.isEmpty()) {
                                 Text(
-                                    text = "Folder Name (e.g. Anime, Utilities)...",
+                                    text = stringResource(R.string.folder_name_hint),
                                     color = Color.White.copy(alpha = 0.4f),
                                     fontSize = 11.sp
                                 )
@@ -750,7 +755,7 @@ fun SettingsSidebar(
                             contentAlignment = Alignment.Center
                         ) {
                             Text(
-                                text = "Add Folder",
+                                text = stringResource(R.string.add_folder),
                                 color = Color.Black,
                                 fontSize = 11.sp,
                                 fontWeight = FontWeight.Bold
@@ -767,7 +772,7 @@ fun SettingsSidebar(
 
                 if (existingFolderList.isNotEmpty()) {
                     Text(
-                        text = "Active Folders: ${existingFolderList.joinToString(", ")}",
+                        text = stringResource(R.string.active_folders_format, existingFolderList.joinToString(", ")),
                         color = Color.White.copy(alpha = 0.7f),
                         fontSize = 11.sp
                     )
@@ -779,18 +784,18 @@ fun SettingsSidebar(
                 )
 
                 // Section 5: Storage Cleanup Utility
-                SettingsSectionHeader(icon = Icons.Default.CleaningServices, title = "Storage Cleanup Utility")
+                SettingsSectionHeader(icon = Icons.Default.CleaningServices, title = stringResource(R.string.section_storage_cleanup))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Coil Image Cache Storage Cleaner",
+                    text = stringResource(R.string.image_cache_cleaner_title),
                     color = Color.White,
                     fontSize = 13.sp,
                     fontWeight = FontWeight.SemiBold
                 )
                 Text(
-                    text = "Purges cached icon & banner disk files to prevent the launcher from consuming excessive space on low-storage TV devices.",
+                    text = stringResource(R.string.image_cache_cleaner_desc),
                     color = Color.White.copy(alpha = 0.5f),
                     fontSize = 10.sp,
                     lineHeight = 14.sp
@@ -813,13 +818,13 @@ fun SettingsSidebar(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.CleaningServices,
-                            contentDescription = "Clear Cache",
+                            contentDescription = stringResource(R.string.clear_cache),
                             tint = if (isClearCacheFocused) Color.Black else TvPrimary,
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(8.dp))
                         Text(
-                            text = "Execute Storage Cleanup (Clear Coil Cache)",
+                            text = stringResource(R.string.clear_coil_cache_btn),
                             color = if (isClearCacheFocused) Color.Black else Color.White,
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp
@@ -833,7 +838,7 @@ fun SettingsSidebar(
                 )
 
                 // Section 6: Backup & Help
-                SettingsSectionHeader(icon = Icons.Default.Save, title = "Backup & Remote Help")
+                SettingsSectionHeader(icon = Icons.Default.Save, title = stringResource(R.string.section_backup_help))
 
                 Spacer(modifier = Modifier.height(8.dp))
 
@@ -850,7 +855,7 @@ fun SettingsSidebar(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Export Backup JSON Config",
+                        text = stringResource(R.string.export_backup_btn),
                         color = if (isExportFocused) Color.Black else Color.White,
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp
@@ -872,7 +877,7 @@ fun SettingsSidebar(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Reset All Custom Banners & Categories",
+                        text = stringResource(R.string.reset_all_banners_btn),
                         color = if (isResetFocused) Color.Black else MaterialTheme.colorScheme.error,
                         fontWeight = FontWeight.Bold,
                         fontSize = 12.sp
@@ -896,13 +901,13 @@ fun SettingsSidebar(
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         Icon(
                             imageVector = Icons.Default.HelpOutline,
-                            contentDescription = "Help Guide",
+                            contentDescription = stringResource(R.string.remote_guide),
                             tint = if (isHelpBtnFocused) Color.Black else TvPrimary,
                             modifier = Modifier.size(16.dp)
                         )
                         Spacer(modifier = Modifier.width(6.dp))
                         Text(
-                            text = "TV Remote Shortcuts & Legend",
+                            text = stringResource(R.string.remote_shortcuts_legend_btn),
                             color = if (isHelpBtnFocused) Color.Black else Color.White,
                             fontWeight = FontWeight.Bold,
                             fontSize = 12.sp
@@ -916,7 +921,7 @@ fun SettingsSidebar(
                 )
 
                 // Section 7: About Aura TV
-                SettingsSectionHeader(icon = Icons.Default.Shield, title = "About Aura TV")
+                SettingsSectionHeader(icon = Icons.Default.Shield, title = stringResource(R.string.section_about))
 
                 Spacer(modifier = Modifier.height(6.dp))
 
@@ -939,13 +944,13 @@ fun SettingsSidebar(
                 ) {
                     Column {
                         Text(
-                            text = "GhostLauncher v1.0 • Open Source TV Launcher",
+                            text = stringResource(R.string.about_app_title, "1.3"),
                             color = if (isVersionFocused) Color.Black else Color.White.copy(alpha = 0.8f),
                             fontSize = 12.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Text(
-                            text = "High-performance sideload manager for Android TV. Lightweight & Ad-free.",
+                            text = stringResource(R.string.about_app_desc),
                             color = if (isVersionFocused) Color.Black.copy(alpha = 0.8f) else Color.White.copy(alpha = 0.5f),
                             fontSize = 10.sp
                         )

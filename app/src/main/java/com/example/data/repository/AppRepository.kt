@@ -10,6 +10,7 @@ import com.example.data.model.AppItem
 import com.example.data.model.AppType
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.withContext
 
@@ -21,7 +22,7 @@ class AppRepository(
 
     val allAppsFlow: Flow<List<AppItem>> = appDao.getAllMetadata().map { customizations ->
         getApplications(customizations.associateBy { it.packageName })
-    }
+    }.flowOn(Dispatchers.IO)
 
     val leanbackAppsFlow: Flow<List<AppItem>> = allAppsFlow.map { list ->
         list.filter { it.appType == AppType.LEANBACK }
@@ -59,8 +60,9 @@ class AppRepository(
 
             val icon = try { resolveInfo.loadIcon(pm) } catch (e: Exception) { null }
             val banner = try { activityInfo.loadBanner(pm) ?: activityInfo.applicationInfo.loadBanner(pm) } catch (e: Exception) { null }
-            val label = custom?.customTitle ?: try {
-                resolveInfo.loadLabel(pm).toString()
+            val label = custom?.customTitle?.trim()?.takeIf { it.isNotBlank() } ?: try {
+                val raw = resolveInfo.loadLabel(pm).toString().trim()
+                if (raw.isNotBlank()) raw else pkgName.substringAfterLast('.').ifBlank { pkgName }
             } catch (e: Exception) { pkgName }
 
             val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0
@@ -104,8 +106,9 @@ class AppRepository(
 
             val icon = try { resolveInfo.loadIcon(pm) } catch (e: Exception) { null }
             val banner = try { activityInfo.loadBanner(pm) ?: appInfo.loadBanner(pm) } catch (e: Exception) { null }
-            val label = custom?.customTitle ?: try {
-                resolveInfo.loadLabel(pm).toString()
+            val label = custom?.customTitle?.trim()?.takeIf { it.isNotBlank() } ?: try {
+                val raw = resolveInfo.loadLabel(pm).toString().trim()
+                if (raw.isNotBlank()) raw else pkgName.substringAfterLast('.').ifBlank { pkgName }
             } catch (e: Exception) { pkgName }
 
             val isSystem = (appInfo.flags and ApplicationInfo.FLAG_SYSTEM) != 0

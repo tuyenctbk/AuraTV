@@ -95,7 +95,7 @@ fun HelpOverlayDialog(
                                 fontWeight = FontWeight.Bold
                             )
                             Text(
-                                text = "Aura TV Shortcuts",
+                                text = stringResource(R.string.aura_shortcuts),
                                 style = MaterialTheme.typography.labelSmall,
                                 color = Color.White.copy(alpha = 0.6f)
                             )

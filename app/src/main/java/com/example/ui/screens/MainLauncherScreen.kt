@@ -145,12 +145,12 @@ fun MainLauncherScreen(
         {
             val intent = Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                 putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
-                putExtra(RecognizerIntent.EXTRA_PROMPT, "Search TV apps...")
+                putExtra(RecognizerIntent.EXTRA_PROMPT, context.getString(R.string.voice_search_prompt))
             }
             try {
                 speechRecognizerLauncher.launch(intent)
             } catch (e: Exception) {
-                Toast.makeText(context, "Voice Search not available on this device", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, context.getString(R.string.voice_search_not_available), Toast.LENGTH_SHORT).show()
             }
         }
     }
@@ -378,7 +378,7 @@ fun MainLauncherScreen(
                                             )
                                             Spacer(modifier = Modifier.width(8.dp))
                                             Text(
-                                                text = catName.uppercase(),
+                                                text = localizedCategoryName(catName).uppercase(),
                                                 color = Color.White.copy(alpha = 0.9f),
                                                 fontSize = 13.sp,
                                                 fontWeight = FontWeight.Bold,
@@ -580,6 +580,20 @@ fun MainLauncherScreen(
 }
 
 @Composable
+fun localizedCategoryName(catName: String): String = when (catName) {
+    "All" -> stringResource(R.string.category_all)
+    "Favorites" -> stringResource(R.string.category_favorites)
+    "Games" -> stringResource(R.string.category_games)
+    "Media" -> stringResource(R.string.category_media)
+    "Tools" -> stringResource(R.string.category_tools)
+    "TV Apps" -> stringResource(R.string.category_tv_apps)
+    "Sideloaded" -> stringResource(R.string.category_sideloaded)
+    "Streaming" -> stringResource(R.string.category_streaming)
+    "System" -> stringResource(R.string.category_system)
+    else -> catName
+}
+
+@Composable
 private fun CategoryFilterRow(
     categories: List<String>,
     categoryCounts: Map<String, Int> = emptyMap(),
@@ -609,18 +623,7 @@ private fun CategoryFilterRow(
                 else -> Icons.Default.Folder
             }
 
-            val localizedTitle = when (catName) {
-                "All" -> stringResource(R.string.category_all)
-                "Favorites" -> stringResource(R.string.category_favorites)
-                "Games" -> stringResource(R.string.category_games)
-                "Media" -> stringResource(R.string.category_media)
-                "Tools" -> stringResource(R.string.category_tools)
-                "TV Apps" -> stringResource(R.string.category_tv_apps)
-                "Sideloaded" -> stringResource(R.string.category_sideloaded)
-                "Streaming" -> stringResource(R.string.category_streaming)
-                "System" -> stringResource(R.string.category_system)
-                else -> catName
-            }
+            val localizedTitle = localizedCategoryName(catName)
 
             Box(
                 modifier = Modifier
@@ -766,7 +769,7 @@ private fun EmptyStateView(
         ) {
             Icon(
                 imageVector = Icons.Default.TvOff,
-                contentDescription = "Empty",
+                contentDescription = stringResource(R.string.empty_title),
                 tint = TvFocusGlow.copy(alpha = 0.6f),
                 modifier = Modifier.size(64.dp)
             )
@@ -774,7 +777,7 @@ private fun EmptyStateView(
             Spacer(modifier = Modifier.height(16.dp))
 
             Text(
-                text = if (searchQuery.isNotBlank()) stringResource(R.string.empty_matching, searchQuery) else stringResource(R.string.empty_category, selectedCategory),
+                text = if (searchQuery.isNotBlank()) stringResource(R.string.empty_matching, searchQuery) else stringResource(R.string.empty_category, localizedCategoryName(selectedCategory)),
                 style = MaterialTheme.typography.titleMedium,
                 color = Color.White,
                 fontWeight = FontWeight.Bold

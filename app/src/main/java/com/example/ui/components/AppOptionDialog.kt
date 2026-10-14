@@ -192,7 +192,7 @@ fun AppOptionDialog(
                                         .padding(horizontal = 6.dp, vertical = 2.dp)
                                 ) {
                                     Text(
-                                        text = "Hotkey: ${app.fastLaunchKey}",
+                                        text = stringResource(R.string.current_hotkey_label, app.fastLaunchKey ?: 0),
                                         color = Color(0xFFFBBF24),
                                         fontSize = 10.sp,
                                         fontWeight = FontWeight.Bold
@@ -224,7 +224,7 @@ fun AppOptionDialog(
 
                     Row(modifier = Modifier.fillMaxWidth()) {
                         InfoColumn(label = stringResource(R.string.version_code), value = "v${app.versionName} (${app.versionCode})", modifier = Modifier.weight(1f))
-                        InfoColumn(label = stringResource(R.string.launch_count), value = "${app.launchCount} launches", modifier = Modifier.weight(1f))
+                        InfoColumn(label = stringResource(R.string.launch_count), value = stringResource(R.string.launch_count_format, app.launchCount), modifier = Modifier.weight(1f))
                     }
 
                     Spacer(modifier = Modifier.height(6.dp))

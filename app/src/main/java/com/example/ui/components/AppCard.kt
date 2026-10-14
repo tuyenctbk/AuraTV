@@ -46,6 +46,7 @@ import androidx.compose.ui.input.key.onKeyEvent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
@@ -54,6 +55,7 @@ import androidx.compose.ui.zIndex
 import coil.compose.AsyncImage
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
+import com.example.R
 import com.example.data.model.AppItem
 import com.example.data.model.AppType
 import com.example.ui.theme.TvFocusGlow
@@ -220,7 +222,7 @@ fun AppCard(
                             .padding(horizontal = 5.dp, vertical = 2.dp)
                     ) {
                         Text(
-                            text = "MOBILE",
+                            text = stringResource(R.string.badge_mobile),
                             color = Color.Black,
                             fontSize = 8.sp,
                             fontWeight = FontWeight.Bold
@@ -231,27 +233,30 @@ fun AppCard(
         }
 
         if (showLabels) {
-            Spacer(modifier = Modifier.height(4.dp))
-            val animatedLabelColor by animateColorAsState(
-                targetValue = if (isFocused) parsedGlowColor else Color.White.copy(alpha = 0.85f),
-                label = "labelColor"
-            )
-            val animatedLabelScale by animateFloatAsState(
-                targetValue = if (isFocused) 1.05f else 1.0f,
-                label = "labelTextScale"
-            )
-            Text(
-                text = app.label,
-                style = MaterialTheme.typography.bodyMedium,
-                color = animatedLabelColor,
-                fontWeight = if (isFocused) FontWeight.Bold else FontWeight.Medium,
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis,
-                modifier = Modifier.graphicsLayer {
-                    scaleX = animatedLabelScale
-                    scaleY = animatedLabelScale
-                }
-            )
+            val displayLabel = app.label.ifBlank { app.packageName.substringAfterLast('.').ifBlank { app.packageName } }
+            if (displayLabel.isNotBlank()) {
+                Spacer(modifier = Modifier.height(4.dp))
+                val animatedLabelColor by animateColorAsState(
+                    targetValue = if (isFocused) parsedGlowColor else Color.White.copy(alpha = 0.85f),
+                    label = "labelColor"
+                )
+                val animatedLabelScale by animateFloatAsState(
+                    targetValue = if (isFocused) 1.05f else 1.0f,
+                    label = "labelTextScale"
+                )
+                Text(
+                    text = displayLabel,
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = animatedLabelColor,
+                    fontWeight = if (isFocused) FontWeight.Bold else FontWeight.Medium,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    modifier = Modifier.graphicsLayer {
+                        scaleX = animatedLabelScale
+                        scaleY = animatedLabelScale
+                    }
+                )
+            }
         }
     }
 }
@@ -363,17 +368,20 @@ private fun FallbackCardContent(app: AppItem) {
                 }
             }
 
-            Spacer(modifier = Modifier.height(6.dp))
-            Text(
-                text = app.label,
-                style = MaterialTheme.typography.labelSmall.copy(
-                    fontWeight = FontWeight.SemiBold,
-                    fontSize = 11.sp
-                ),
-                color = Color.White.copy(alpha = 0.95f),
-                maxLines = 1,
-                overflow = TextOverflow.Ellipsis
-            )
+            val fallbackLabel = app.label.ifBlank { app.packageName.substringAfterLast('.').ifBlank { app.packageName } }
+            if (fallbackLabel.isNotBlank()) {
+                Spacer(modifier = Modifier.height(6.dp))
+                Text(
+                    text = fallbackLabel,
+                    style = MaterialTheme.typography.labelSmall.copy(
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 11.sp
+                    ),
+                    color = Color.White.copy(alpha = 0.95f),
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis
+                )
+            }
         }
     }
 }

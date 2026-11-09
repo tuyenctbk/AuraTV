@@ -5,6 +5,7 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
+    <!-- Full-bleed opaque gradient background -->
     <path
         android:pathData="M0,0h108v108h-108z">
         <aapt:attr name="android:fillColor">
@@ -14,10 +15,19 @@
                 android:endX="108"
                 android:endY="108"
                 android:type="linear">
-                <item android:color="#0F172A" android:offset="0.0" />
-                <item android:color="#1E1B4B" android:offset="0.5" />
-                <item android:color="#2E1065" android:offset="1.0" />
+                <item android:color="#0A0F1D" android:offset="0.0" />
+                <item android:color="#18153C" android:offset="0.45" />
+                <item android:color="#0D1224" android:offset="1.0" />
             </gradient>
         </aapt:attr>
     </path>
+    <!-- Ambient Cyan Glow (Top-Left) -->
+    <path
+        android:pathData="M0,0 C32,0 64,16 64,44 C64,72 20,72 0,72 Z"
+        android:fillColor="#1F22D3EE" />
+    <!-- Ambient Magenta Glow (Bottom-Right) -->
+    <path
+        android:pathData="M48,44 C76,44 108,60 108,86 L108,108 L72,108 C46,108 48,68 48,44 Z"
+        android:fillColor="#1AEC4899" />
 </vector>
+
